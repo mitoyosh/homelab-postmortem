@@ -22,6 +22,12 @@ New scripts are added as new incidents happen — this is a living collection,
 not a one-time release.
 
 <div class="callout">
-  <h3>Get the toolkit</h3>
-  <p>Purchase and download links are being set up — check back shortly.</p>
+  <h3>Get the toolkit — $12</h3>
+  <p>
+    One-time purchase. The download link is emailed to you immediately, and
+    every script added later is part of the same purchase.
+  </p>
+  <p><strong>Note:</strong> this store is currently in test mode while payment
+  processing is being finalized — no real charges are possible yet.</p>
+  <a class="btn" href="https://buy.stripe.com/test_28E3cua3KaaH8LQd4i6Zy00">Buy the toolkit &rarr;</a>
 </div>
