@@ -1,0 +1,28 @@
+title: The Homelab Postmortem
+description: >-
+  Real, dated postmortems from running a homelab — what broke, how it was
+  diagnosed, and the exact fix. Plus the verified scripts that came out of it.
+url: ""
+baseurl: ""
+
+markdown: kramdown
+theme: null
+plugins:
+  - jekyll-feed
+
+permalink: /:year/:month/:day/:title/
+
+defaults:
+  - scope:
+      path: ""
+      type: "posts"
+    values:
+      layout: "post"
+  - scope:
+      path: ""
+      type: "pages"
+    values:
+      layout: "page"
+
+exclude:
+  - README.md

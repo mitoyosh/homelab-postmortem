@@ -1,0 +1,14 @@
+---
+layout: default
+---
+<article>
+  <h1>{{ page.title }}</h1>
+  <p class="post-meta">{{ page.date | date: "%B %-d, %Y" }}</p>
+  {{ content }}
+
+  <div class="callout">
+    <h3>Toolkit</h3>
+    <p>This post's fix is available as a tested, ready-to-run script in the toolkit.</p>
+    <a class="btn" href="{{ '/toolkit/' | relative_url }}">See the toolkit &rarr;</a>
+  </div>
+</article>

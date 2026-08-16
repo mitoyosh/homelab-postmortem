@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% if page.title %}{{ page.title }} — {% endif %}{{ site.title }}</title>
+  <meta name="description" content="{{ page.excerpt | default: site.description | strip_html | strip_newlines | truncate: 160 }}">
+  <link rel="stylesheet" href="{{ '/assets/style.css' | relative_url }}">
+  <link rel="alternate" type="application/rss+xml" title="{{ site.title }}" href="{{ '/feed.xml' | relative_url }}">
+</head>
+<body>
+  <div class="wrap">
+    <header class="site">
+      <a class="brand" href="{{ '/' | relative_url }}">{{ site.title }}</a>
+      <p class="tagline">{{ site.description }}</p>
+      <nav class="site">
+        <a href="{{ '/' | relative_url }}">Posts</a>
+        <a href="{{ '/toolkit/' | relative_url }}">Toolkit</a>
+        <a href="{{ '/about/' | relative_url }}">About</a>
+        <a href="https://github.com/mitoyosh/homelab-postmortem">Source</a>
+      </nav>
+    </header>
+    <main>
+      {{ content }}
+    </main>
+    <footer class="site">
+      <p>
+        Posts here are drafted with AI assistance from real, dated incidents, and reviewed by a human before
+        publishing. Every script in the toolkit is tested against a live device before it ships. See
+        <a href="{{ '/about/' | relative_url }}">About</a> for details.
+      </p>
+    </footer>
+  </div>
+</body>
+</html>

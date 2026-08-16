@@ -1,0 +1,16 @@
+---
+layout: default
+title: null
+---
+<p>
+  Homelabs fail in specific, dateable ways. This is a running record of what broke,
+  how it was actually diagnosed, and the exact fix — not generic best-practice advice.
+</p>
+
+{% for post in site.posts %}
+<div class="post-list-item">
+  <h2><a href="{{ post.url | relative_url }}">{{ post.title }}</a></h2>
+  <p class="post-meta">{{ post.date | date: "%B %-d, %Y" }}</p>
+  <p>{{ post.excerpt | strip_html | truncate: 220 }}</p>
+</div>
+{% endfor %}
