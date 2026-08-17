@@ -2,8 +2,8 @@ title: The Homelab Postmortem
 description: >-
   Real, dated postmortems from running a homelab — what broke, how it was
   diagnosed, and the exact fix. Plus the verified scripts that came out of it.
-url: "https://mitoyosh.github.io"
-baseurl: "/homelab-postmortem"
+url: "https://homelabpostmortem.com"
+baseurl: ""
 
 markdown: kramdown
 theme: null
