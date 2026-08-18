@@ -32,7 +32,5 @@ not a one-time release.
     One-time purchase. The download link is emailed to you immediately, and
     every script added later is part of the same purchase.
   </p>
-  <p><strong>Note:</strong> this store is currently in test mode while payment
-  processing is being finalized — no real charges are possible yet.</p>
-  <a class="btn" href="https://buy.stripe.com/test_28E3cua3KaaH8LQd4i6Zy00">Buy the toolkit &rarr;</a>
+  <a class="btn" href="https://buy.stripe.com/5kQ8wOa3y4OwaWf7yM5Vu01">Buy the toolkit &rarr;</a>
 </div>
