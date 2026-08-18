@@ -15,6 +15,12 @@ reviewed by a human before publishing. Every script referenced in a post is
 tested against live hardware before it's included in the toolkit — not
 generated from theory and hoped to work.
 
+## In Japanese
+
+There's also a longer, first-person narrative in Japanese covering how this
+whole project came together — from a spare Raspberry Pi to a live payment
+flow — on [note](https://note.com/homelabpm/n/n88bfc4554b61).
+
 ## The toolkit
 
 Scripts that come out of these postmortems are collected into a toolkit —
