@@ -16,7 +16,12 @@ destructive, dry-run modes where it matters.
   [The rpi-clone PARTUUID trap]({{ '/2026/08/16/rpi-clone-partuuid-trap/' | relative_url }}).
 - **`check-undervoltage.sh`** — one-shot Raspberry Pi power health check,
   with or without `vcgencmd` installed, plain-English explanations instead
-  of a hex code.
+  of a hex code. From
+  [Undervoltage doesn't look like a power problem]({{ '/2026/08/17/undervoltage-looks-like-a-wifi-problem/' | relative_url }}).
+- **`check-journald-persistence.sh`** — detects the vendor drop-in that keeps
+  Trixie's journal in RAM, and fixes it properly — including the flush step
+  most published fixes leave out. From
+  [Trixie throws away your logs on reboot]({{ '/2026/08/18/trixie-journald-volatile-logs/' | relative_url }}).
 
 New scripts are added as new incidents happen — this is a living collection,
 not a one-time release.
