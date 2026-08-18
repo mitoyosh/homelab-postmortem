@@ -23,6 +23,9 @@ destructive, dry-run modes where it matters.
   most published fixes leave out. From
   [Trixie throws away your logs on reboot]({{ '/2026/08/18/trixie-journald-volatile-logs/' | relative_url }}).
 
+Also relevant if you're building your own delivery pipeline:
+[Stripe retries a failed webhook for three days]({{ '/2026/08/18/stripe-webhook-retries-and-idempotency/' | relative_url }}) — the idempotency bug this toolkit's own delivery Worker hit and fixed.
+
 New scripts are added as new incidents happen — this is a living collection,
 not a one-time release.
 
