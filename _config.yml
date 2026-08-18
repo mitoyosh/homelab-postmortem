@@ -9,6 +9,7 @@ markdown: kramdown
 theme: null
 plugins:
   - jekyll-feed
+  - jekyll-sitemap
 
 permalink: /:year/:month/:day/:title/
 
