@@ -1,0 +1,35 @@
+name: Sync new posts to dev.to
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '_posts/**.md'
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 2
+
+      - name: Find newly added posts
+        id: find
+        run: |
+          ADDED=$(git diff --diff-filter=A --name-only HEAD^ HEAD -- '_posts/*.md' || true)
+          echo "files<<DEVTO_EOF" >> "$GITHUB_OUTPUT"
+          echo "$ADDED" >> "$GITHUB_OUTPUT"
+          echo "DEVTO_EOF" >> "$GITHUB_OUTPUT"
+
+      - name: Publish to dev.to
+        if: steps.find.outputs.files != ''
+        env:
+          DEV_TO_API_KEY: ${{ secrets.DEV_TO_API_KEY }}
+        run: |
+          chmod +x .github/scripts/devto-sync.sh
+          while IFS= read -r file; do
+            [ -z "$file" ] && continue
+            .github/scripts/devto-sync.sh "$file"
+          done <<< "${{ steps.find.outputs.files }}"

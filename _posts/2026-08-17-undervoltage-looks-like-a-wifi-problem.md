@@ -86,4 +86,4 @@ So it's worth making the power check reflexive rather than diagnostic: on any Pi
 
 Two unrelated subsystems failing simultaneously is rarely two bugs. It's usually one thing underneath both of them.
 
-A ready-to-run version of this check — which works with or without `vcgencmd`, decodes the bitfield into plain English, and tells you which of the three causes above to look at — is in the [toolkit]({{ '/toolkit/' | relative_url }}).
+A ready-to-run version of this check — which works with or without `vcgencmd`, decodes the bitfield into plain English, and tells you which of the three causes above to look at — is in the [toolkit](https://homelabpostmortem.com/toolkit/).

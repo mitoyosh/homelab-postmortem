@@ -65,7 +65,7 @@ sudo grep -rl "<OLD_PARTUUID>" /mnt 2>/dev/null
 
 If that returns nothing, unmount and reboot into the boot-order change with confidence.
 
-A ready-to-run version of this check-and-fix — with a dry-run mode and an automatic backup of `cmdline.txt` before it touches anything — is in the [toolkit]({{ '/toolkit/' | relative_url }}) that comes with this post.
+A ready-to-run version of this check-and-fix — with a dry-run mode and an automatic backup of `cmdline.txt` before it touches anything — is in the [toolkit](https://homelabpostmortem.com/toolkit/) that comes with this post.
 
 ## The general lesson
 
