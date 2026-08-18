@@ -26,3 +26,4 @@ defaults:
 
 exclude:
   - README.md
+  - research
