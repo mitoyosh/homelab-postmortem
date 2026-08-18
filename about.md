@@ -20,6 +20,13 @@ generated from theory and hoped to work.
 Scripts that come out of these postmortems are collected into a toolkit —
 see the [toolkit page]({{ '/toolkit/' | relative_url }}) for what's in it.
 
+## Analytics
+
+This site uses Cloudflare Web Analytics to count page views. It sets no
+cookies, does not fingerprint your browser, and does not track you across
+sites — so there's no consent banner, because there's nothing to consent to.
+It tells me which posts people read. That's all it's for.
+
 ## Questions or found a bug in a script?
 
 Open an issue on the [source repository](https://github.com/mitoyosh/homelab-postmortem).
