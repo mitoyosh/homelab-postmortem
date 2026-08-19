@@ -27,6 +27,19 @@ destructive, dry-run modes where it matters.
   `/proc/swaps` all decline to mention. From
   [Your Pi's 2 GB swap file isn't swap]({{ '/2026/08/19/trixie-rpi-swap-writeback-file/' | relative_url }}).
 
+- **`check-memory-cgroup.sh`** — answers whether a memory limit set on this
+  machine will actually be enforced. On stock Raspberry Pi OS it will not, and
+  `docker run --memory` says nothing about it. From
+  [Your Pi accepts every memory limit you set]({{ '/2026/08/19/pi-memory-cgroup-disabled-by-firmware/' | relative_url }}).
+- **`check-sysctl-persistence.sh`** — finds sysctl settings that apply now and
+  disappear at the next reboot, and checks for the compatibility symlink that
+  decides which way it goes. From
+  [sysctl -p says it worked]({{ '/2026/08/19/etc-sysctl-conf-not-read-at-boot/' | relative_url }}).
+- **`check-nmcli-provisioning.sh`** — flags the `nmcli` abbreviation that
+  NetworkManager 1.52 made ambiguous, and WiFi profiles left with no key
+  management that look configured and can never associate. From
+  [A new NetworkManager property broke a decade of scripts]({{ '/2026/08/19/nmcli-abbreviation-ambiguity-trixie/' | relative_url }}).
+
 Also relevant if you're building your own delivery pipeline:
 [Stripe retries a failed webhook for three days]({{ '/2026/08/18/stripe-webhook-retries-and-idempotency/' | relative_url }}) — the idempotency bug this toolkit's own delivery Worker hit and fixed.
 
