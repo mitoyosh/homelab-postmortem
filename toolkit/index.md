@@ -22,6 +22,10 @@ destructive, dry-run modes where it matters.
   Trixie's journal in RAM, and fixes it properly — including the flush step
   most published fixes leave out. From
   [Trixie throws away your logs on reboot]({{ '/2026/08/18/trixie-journald-volatile-logs/' | relative_url }}).
+- **`check-swap-mechanism.sh`** — reports which swap subsystem actually governs
+  the machine, and finds disk consumed by swap that `swapon`, `free` and
+  `/proc/swaps` all decline to mention. From
+  [Your Pi's 2 GB swap file isn't swap]({{ '/2026/08/19/trixie-rpi-swap-writeback-file/' | relative_url }}).
 
 Also relevant if you're building your own delivery pipeline:
 [Stripe retries a failed webhook for three days]({{ '/2026/08/18/stripe-webhook-retries-and-idempotency/' | relative_url }}) — the idempotency bug this toolkit's own delivery Worker hit and fixed.
