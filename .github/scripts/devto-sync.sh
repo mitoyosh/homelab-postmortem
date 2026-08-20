@@ -64,12 +64,25 @@ else
   TAGS_JSON="[]"
 fi
 
+# Cover images live in the site repo at assets/covers/<same-basename>.png.
+# dev.to weights them heavily in the home feed, so attach one when it exists
+# rather than shipping a post that reads as untitled there.
+COVER_URL="${SITE_URL}/assets/covers/${BASENAME}.png"
+if [ -f "assets/covers/${BASENAME}.png" ]; then
+  echo "Cover: $COVER_URL"
+else
+  echo "No cover at assets/covers/${BASENAME}.png — publishing without one."
+  COVER_URL=""
+fi
+
 PAYLOAD=$(jq -n \
   --arg title "$TITLE" \
   --arg body "$BODY" \
   --arg canonical "$CANONICAL_URL" \
+  --arg cover "$COVER_URL" \
   --argjson tags "$TAGS_JSON" \
-  '{article: {title: $title, published: true, body_markdown: $body, tags: $tags, canonical_url: $canonical}}')
+  '{article: {title: $title, published: true, body_markdown: $body, tags: $tags, canonical_url: $canonical}}
+   | if $cover != "" then .article.main_image = $cover else . end')
 
 echo "Publishing '$TITLE' -> $CANONICAL_URL (tags: $TAGS_JSON)"
 
