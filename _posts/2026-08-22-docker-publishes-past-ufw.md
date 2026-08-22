@@ -38,11 +38,11 @@ From another machine on the same LAN:
 
 Blocked, exactly as configured. Now stop that, and publish the same port from a container instead:
 
-```bash
+{% raw %}```bash
 $ sudo docker run -d --name ufwtest -p 8080:80 nginx:alpine
 $ sudo docker ps --format '{{.Ports}}'
 0.0.0.0:8080->80/tcp, :::8080->80/tcp
-```
+```{% endraw %}
 
 `ufw status` is unchanged — still no rule for 8080, still `deny (incoming)`. From the same other machine:
 
@@ -120,11 +120,11 @@ Two things work. Both were tested against the same container and the same firewa
 
 **Bind the published port to localhost when you don't want it on the network.** The `-p` flag takes an address, and most examples omit it, which means `0.0.0.0`:
 
-```bash
+{% raw %}```bash
 $ sudo docker run -d --name fixA -p 127.0.0.1:8080:80 nginx:alpine
 $ sudo docker ps --format '{{.Ports}}'
 127.0.0.1:8080->80/tcp
-```
+```{% endraw %}
 
 ```
 localhost:8080            → HTTP 200

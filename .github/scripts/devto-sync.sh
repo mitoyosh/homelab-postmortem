@@ -41,19 +41,33 @@ if [ -z "$TITLE" ]; then
   exit 1
 fi
 
-# Raw Jekyll Liquid tags ({{ ... }}) only get resolved by Jekyll's own build.
-# Sent verbatim to dev.to they render as broken/literal text (this bit us once
-# already — see the toolkit links in the 2026-08-16/17 posts). Fail loudly
-# instead of silently shipping a broken link.
-if echo "$BODY" | grep -q '{{'; then
-  echo "ERROR: $FILE body still contains raw Liquid syntax ({{ ... }})." >&2
-  echo "Use plain absolute URLs (https://homelabpostmortem.com/...) in post bodies instead — this content gets syndicated verbatim." >&2
+# Liquid that Jekyll would have rendered must not reach dev.to verbatim — it
+# would show as literal text or a broken link (this bit us once already, in the
+# 2026-08-16/17 toolkit links).
+# Match Liquid specifically — filters, or site./page. variables — rather than
+# any '{{', because Go template syntax in shell examples (docker --format
+# '{{.Ports}}') is legitimate content that must survive.
+if echo "$BODY" | grep -qE '\{\{[^}]*(\||site\.|page\.)'; then
+  echo "ERROR: $FILE body still contains raw Liquid syntax." >&2
+  echo "Use plain absolute URLs (https://homelabpostmortem.com/...) in post bodies — this content gets syndicated verbatim." >&2
+  exit 1
+fi
+
+# Jekyll evaluates Liquid inside code fences too, so Go/Helm template braces
+# have to be wrapped in {% raw %} or they render as nothing on the site itself.
+if echo "$BODY" | grep -qE '\{\{\s*\.' && ! grep -q '{% raw %}' "$FILE"; then
+  echo "ERROR: $FILE has template braces ({{ .Something }}) outside a {% raw %} block." >&2
+  echo "Jekyll will evaluate them to an empty string and the published command will be broken." >&2
   exit 1
 fi
 
 # Every post gets the same toolkit CTA the site's own post layout adds
 # automatically — but that layout isn't visible to this script, since it
 # only reads the raw post body, so it has to be appended here too.
+# {% raw %} is a Jekyll instruction, meaningless on dev.to. Strip the markers
+# but keep what they wrapped.
+BODY=$(echo "$BODY" | sed -e 's/{% raw %}//g' -e 's/{% endraw %}//g')
+
 CTA=$'\n\n## Toolkit\n\nThis post\'s fix is available as a tested, ready-to-run script in the toolkit.\n\n**[See the toolkit →](https://homelabpostmortem.com/toolkit/)**\n'
 BODY="${BODY}${CTA}"
 
