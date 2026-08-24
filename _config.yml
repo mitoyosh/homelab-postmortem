@@ -13,6 +13,11 @@ plugins:
 
 permalink: /:year/:month/:day/:title/
 
+# GitHub Pages builds in UTC. Without this, a post written after midnight JST
+# carries tomorrow's date from UTC's point of view, and Jekyll silently drops
+# it as a future post — the build succeeds and the page 404s.
+timezone: Asia/Tokyo
+
 defaults:
   - scope:
       path: ""
