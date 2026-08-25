@@ -31,7 +31,7 @@ layout: default
     Covers are named after the post's source file, so derive the path rather
     than repeating it in every post's front matter. Only emit it if the file
     actually exists — a broken image URL in schema is worse than none.
-  {% endcomment %}{% assign cover_path = "/assets/covers/" | append: page.basename_without_ext | append: ".png" %}{% assign cover_file = site.static_files | where: "path", cover_path | first %}{% if cover_file %},
+  {% endcomment %}{% assign cover_slug = page.path | replace: "_posts/", "" | replace: ".md", "" %}{% assign cover_path = "/assets/covers/" | append: cover_slug | append: ".png" %}{% assign cover_file = site.static_files | where: "path", cover_path | first %}{% if cover_file %},
   "image": "{{ site.url }}{{ cover_path }}"{% endif %}
 }
 </script>
