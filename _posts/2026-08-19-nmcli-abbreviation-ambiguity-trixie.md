@@ -141,3 +141,5 @@ Abbreviations are a convenience for humans at a prompt. They're a liability in a
 The narrower habit worth taking from this: **when a tool validates a batch, find out whether it's atomic before you rely on ordering.** The intuition that "the stuff before the error went through" is wrong here, and it's wrong in the safer direction — but if it had been right, this same bug would have produced a profile with a password and no key management, which is a stranger thing to debug than a profile with neither.
 
 And the one that generalises furthest: a resource that *exists* is not a resource that is *configured*. The provisioning script's job wasn't to create a profile, it was to create a working connection. Checking for the former and reporting success is how you end up with a headless box on the bench and no idea why it's silent.
+
+The same gap between what a tool reports and what is actually true shows up in [a firewall that calls a port closed while Docker serves it to the whole LAN](https://homelabpostmortem.com/2026/08/22/docker-publishes-past-ufw/).

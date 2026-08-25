@@ -100,3 +100,5 @@ When a status summary and a raw log disagree about what's happening, **the log i
 `reason: "no-mention"` was a precise, correct, complete description of the failure. It was available before I made my first change. I reached for the status line because it was already on screen, and spent the next several steps debugging an interpretation instead of an event.
 
 So: when a component "connects fine but doesn't react", check the receive path's decision log before you touch a single config value. And when a documented config key doesn't exist in the running schema, treat that as evidence you're in the wrong subsystem — not as an invitation to find a different way to set it.
+
+The delivery pipeline for this site hit a related failure from the other direction — everything reported success, repeatedly, and that was the bug: [Stripe retries a failed webhook for three days](https://homelabpostmortem.com/2026/08/18/stripe-webhook-retries-and-idempotency/).

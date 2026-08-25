@@ -133,3 +133,5 @@ SystemMaxUse=200M
 Three separate things pointed at "persistence is on": the directory existed, the main config said `auto`, and after the first fix attempt the config resolution confirmed `persistent`. All three were true. None of them described where log bytes were actually being written.
 
 `journalctl --header` was the only thing that reported the live state — the actual open file — and it's the check worth building the habit around. Config tells you intent. Headers tell you reality. When they disagree, something in between hasn't run yet.
+
+This turned out to be the first of several on this platform with the same shape: [sysctl settings that apply and then vanish at reboot](https://homelabpostmortem.com/2026/08/19/etc-sysctl-conf-not-read-at-boot/), and [swap config that needs a reboot before it means anything](https://homelabpostmortem.com/2026/08/19/trixie-rpi-swap-writeback-file/).

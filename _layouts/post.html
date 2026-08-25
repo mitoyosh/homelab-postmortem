@@ -1,9 +1,46 @@
 ---
 layout: default
 ---
+{% comment %}
+  Article schema. Without this, search engines have to infer the date, title and
+  author from the page, and they infer them badly on a hand-rolled theme.
+  Dates are ISO-8601 with the site's timezone, which _config.yml pins.
+{% endcomment %}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "TechArticle",
+  "headline": {{ page.title | jsonify }},
+  "description": {{ page.excerpt | default: site.description | strip_html | strip_newlines | truncate: 300 | jsonify }},
+  "datePublished": "{{ page.date | date_to_xmlschema }}",
+  "dateModified": "{{ page.date | date_to_xmlschema }}",
+  "author": {
+    "@type": "Person",
+    "name": "Mito Yoshida",
+    "url": "{{ site.url }}/about/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": {{ site.title | jsonify }},
+    "url": "{{ site.url }}"
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "{{ site.url }}{{ page.url }}"
+  }{% comment %}
+    Covers are named after the post's source file, so derive the path rather
+    than repeating it in every post's front matter. Only emit it if the file
+    actually exists — a broken image URL in schema is worse than none.
+  {% endcomment %}{% assign cover_path = "/assets/covers/" | append: page.basename_without_ext | append: ".png" %}{% assign cover_file = site.static_files | where: "path", cover_path | first %}{% if cover_file %},
+  "image": "{{ site.url }}{{ cover_path }}"{% endif %}
+}
+</script>
+
 <article>
   <h1>{{ page.title }}</h1>
-  <p class="post-meta">{{ page.date | date: "%B %-d, %Y" }}</p>
+  <p class="post-meta">
+    <time datetime="{{ page.date | date_to_xmlschema }}">{{ page.date | date: "%B %-d, %Y" }}</time>
+  </p>
   {{ content }}
 
   <div class="callout">
@@ -12,3 +49,25 @@ layout: default
     <a class="btn" href="{{ site.url }}{{ '/toolkit/' | relative_url }}">See the toolkit &rarr;</a>
   </div>
 </article>
+
+{% comment %}
+  Every post was reachable only from the index, so most had no inbound link from
+  another post at all — bad for crawling, and the reason nobody read a second
+  page. Newest first, current post excluded, capped so the tail of the list
+  doesn't become the bulk of the page.
+{% endcomment %}
+{% assign others = site.posts | where_exp: "p", "p.url != page.url" %}
+{% if others.size > 0 %}
+<nav class="more-posts">
+  <h2>Other postmortems</h2>
+  <ul>
+    {% for p in others limit: 5 %}
+    <li>
+      <a href="{{ p.url | relative_url }}">{{ p.title }}</a>
+      <span class="more-posts-date">{{ p.date | date: "%b %-d, %Y" }}</span>
+    </li>
+    {% endfor %}
+  </ul>
+  <p><a href="{{ '/' | relative_url }}">All posts &rarr;</a></p>
+</nav>
+{% endif %}

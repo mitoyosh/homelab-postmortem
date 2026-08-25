@@ -29,7 +29,7 @@ doesn't happen.
 
 ## The setup
 
-Moving a Raspberry Pi's root filesystem off the SD card and onto a USB-attached SSD is one of the highest-value changes you can make to a Pi that's meant to run unattended for months: SD cards wear out under sustained write load, SSDs don't (practically speaking), and boot/IO latency drops noticeably as a bonus.
+Moving a Raspberry Pi's root filesystem off the SD card and onto a USB-attached SSD is one of the highest-value changes you can make to a Pi that's meant to run unattended for months: SD cards wear out under sustained write load, SSDs don't (practically speaking), and boot/IO latency drops noticeably as a bonus. (Worth ruling out [undervoltage](https://homelabpostmortem.com/2026/08/17/undervoltage-looks-like-a-wifi-problem/) first if the card you're escaping kept corrupting — a marginal power supply will do the same thing to an SSD.)
 
 The standard playbook is:
 

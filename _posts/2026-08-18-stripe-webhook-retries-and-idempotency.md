@@ -74,3 +74,5 @@ Same technique as forging a signature to test rejection — construct the real t
 "At-least-once" is the standard delivery guarantee for webhooks, queues, and most event systems, precisely because "exactly-once" is expensive or impossible to guarantee end-to-end. Any time you're consuming events from a system that documents at-least-once delivery, the assumption to design against isn't "this fires once" — it's "this will eventually fire more than once, probably at the worst possible time, and my handler needs to be safe either way."
 
 The cost of skipping that isn't a crash you'll notice in a log. It's a side effect running twice, silently, on exactly the request path most likely to be running for a real customer at the exact moment you were still shaking out the rest of the system.
+
+For a different flavour of the same problem — a component that looks healthy while quietly discarding your input — see [the Discord bot that ignored every mention](https://homelabpostmortem.com/2026/08/17/discord-bot-ignores-mentions-applicationid/).

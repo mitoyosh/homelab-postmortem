@@ -33,7 +33,7 @@ What's less obvious — and what makes this so hard to diagnose from symptoms �
 
 - **The wireless chip is voltage-sensitive.** A rail that sags under load will produce exactly what I was seeing: a radio that scans but won't associate, or associates and drops. It presents as a networking fault, not a power fault.
 - **Everything gets slower, unevenly.** A throttled CPU plus a stressed rail makes interactive work feel like the machine is hanging rather than running slowly.
-- **It's the single most common cause of SD card corruption on Pis.** Losing the rail mid-write is how filesystems get damaged. So the "bad SD card" hypothesis isn't wrong, exactly — it's downstream. Undervoltage *creates* bad SD cards.
+- **It's the single most common cause of SD card corruption on Pis.** Losing the rail mid-write is how filesystems get damaged. So the "bad SD card" hypothesis isn't wrong, exactly — it's downstream. Undervoltage *creates* bad SD cards. (If you're moving off the SD card because of this, the clone step has [a trap of its own](https://homelabpostmortem.com/2026/08/16/rpi-clone-partuuid-trap/).)
 
 That last point is why this matters more than a performance footnote. If you chase the symptom and reflash the card, you will produce a machine that works briefly and then breaks again, and you will blame the card a second time.
 
