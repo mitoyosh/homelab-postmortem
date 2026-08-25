@@ -163,3 +163,5 @@ This is the same shape as [the swap file that isn't swap](https://homelabpostmor
 So the habit worth building is narrow and cheap: **test exposure from a different machine.** One `curl` from a laptop settles in three seconds what an hour of reading rule listings will not, because it exercises the whole stack instead of one layer's opinion of it.
 
 And when you install something that manages its own firewall rules — Docker, Tailscale, libvirt, k3s — assume it did, and go look at the chain order once. The ordering is the entire behaviour, and it is visible in one command.
+
+Not every runtime behaves this way, and the common advice that it's a rootless-vs-rootful distinction is wrong: [Podman publishes the same port and your firewall still holds — even as root](https://homelabpostmortem.com/2026/08/25/podman-respects-your-firewall/).

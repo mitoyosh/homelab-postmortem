@@ -15,6 +15,8 @@ A freshly imaged Pi 4B, running headless-ish off a monitor and keyboard for setu
 
 The natural reading of those two symptoms together is "bad image" or "bad SD card". That is where I would have gone next.
 
+If only the Wi-Fi were broken, the shortlist would be different — on Trixie, [one abbreviated `nmcli` property can leave a profile with the right SSID and no password at all](https://homelabpostmortem.com/2026/08/19/nmcli-abbreviation-ambiguity-trixie/), which also presents as a radio that scans and won't associate. What makes the case below electrical is the *second* symptom.
+
 ## The line that changed the diagnosis
 
 Buried in the console spam was this:
