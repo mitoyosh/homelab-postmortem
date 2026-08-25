@@ -168,6 +168,32 @@ $                        # nothing
 
 netavark talks to nftables directly. There is no legacy-vs-nft backend question to get wrong, because there is no iptables layer at all.
 
+## The limit of this result: netavark has a second firewall driver
+
+Everything above is netavark's **nftables** driver, which is what you get by
+default on a Debian-family box where `ufw` is the firewall. netavark also ships
+a **firewalld** driver, and on that path the behaviour is reportedly the
+opposite: Podman places container interfaces in firewalld's `trusted` zone, and
+rootful Podman's published ports are opened through the firewall deliberately.
+firewalld 2.3.0 added a
+[`StrictForwardPorts`](https://firewalld.org/2024/11/strict-forward-ports)
+setting — defaulting to `no` — specifically to let you stop that, and turning it
+on makes rootful Podman port forwarding stop working. Red Hat documents the
+open-by-default behaviour as intended.
+
+**I have not verified the firewalld path on hardware** — this box has no
+firewalld on it, and everything else in this post is something I measured. I am
+flagging it because the headline of this post would be wrong if you read it as
+"Podman is safe everywhere". The accurate claim is narrower:
+
+> With netavark's nftables driver and `ufw`, rootful Podman writes firewall
+> rules and the host policy still decides. Which driver you are on is the
+> variable that matters, and it is set by which firewall you installed, not by
+> whether you used `sudo`.
+
+If you run firewalld, check `firewall-cmd --get-zone-of-interface=podman0` and
+your `StrictForwardPorts` setting rather than assuming this post covers you.
+
 ## What I'd take from this
 
 **The comment was right and worth acting on, and the reason it gave was wrong.** If I'd repeated it without checking, I'd have published "rootless protects you because it can't write rules" — true as far as it goes, and it would have left people thinking rootful Podman is as dangerous as Docker. It isn't.
