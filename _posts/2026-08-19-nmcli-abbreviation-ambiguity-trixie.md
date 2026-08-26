@@ -143,3 +143,5 @@ The narrower habit worth taking from this: **when a tool validates a batch, find
 And the one that generalises furthest: a resource that *exists* is not a resource that is *configured*. The provisioning script's job wasn't to create a profile, it was to create a working connection. Checking for the former and reporting success is how you end up with a headless box on the bench and no idea why it's silent.
 
 The same gap between what a tool reports and what is actually true shows up in [a firewall that calls a port closed while Docker serves it to the whole LAN](https://homelabpostmortem.com/2026/08/22/docker-publishes-past-ufw/).
+
+And if you are about to reimage the box you just finished provisioning, check where that profile is actually stored before you back it up — on a stock Trixie image, [the directory every guide names is empty and `tar` will not tell you](https://homelabpostmortem.com/2026/08/26/wifi-config-not-in-system-connections/).

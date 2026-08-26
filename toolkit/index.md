@@ -39,7 +39,11 @@ destructive, dry-run modes where it matters.
   NetworkManager 1.52 made ambiguous, and WiFi profiles left with no key
   management that look configured and can never associate. From
   [A new NetworkManager property broke a decade of scripts]({{ '/2026/08/19/nmcli-abbreviation-ambiguity-trixie/' | relative_url }}).
-- **`check-docker-firewall-bypass.sh`** — finds container ports that are
+- **`check-network-config-location.sh`** — finds where your WiFi credentials
+  are actually stored, and warns when the directory every guide names is
+  empty so your backup silently captures nothing. From
+  [tar backed up your WiFi config and exited 0]({{ '/2026/08/26/wifi-config-not-in-system-connections/' | relative_url }}).
+- **`check-container-firewall-bypass.sh`** — finds container ports that are
   reachable from your network while your firewall reports them as denied.
   Docker's chains are evaluated before UFW's, so both are true at once. From
   [UFW says the port is closed]({{ '/2026/08/22/docker-publishes-past-ufw/' | relative_url }}).
