@@ -168,6 +168,8 @@ $                        # nothing
 
 netavark talks to nftables directly. There is no legacy-vs-nft backend question to get wrong, because there is no iptables layer at all.
 
+That turns out to matter more than it looks. On the Pi's current 6.18 kernels the legacy backend is not merely unused — [the kernel modules it needs are no longer built at all](https://homelabpostmortem.com/2026/08/27/iptables-legacy-modules-gone-from-pi-kernel/), so anything still reaching for it fails outright.
+
 ## The limit of this result: netavark has a second firewall driver
 
 Everything above is netavark's **nftables** driver, which is what you get by

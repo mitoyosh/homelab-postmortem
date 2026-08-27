@@ -39,6 +39,10 @@ destructive, dry-run modes where it matters.
   NetworkManager 1.52 made ambiguous, and WiFi profiles left with no key
   management that look configured and can never associate. From
   [A new NetworkManager property broke a decade of scripts]({{ '/2026/08/19/nmcli-abbreviation-ambiguity-trixie/' | relative_url }}).
+- **`check-iptables-backend.sh`** — tells you whether legacy iptables can
+  work on this kernel at all, before you install something that assumes it.
+  From
+  [iptables says your kernel needs upgrading]({{ '/2026/08/27/iptables-legacy-modules-gone-from-pi-kernel/' | relative_url }}).
 - **`check-network-config-location.sh`** — finds where your WiFi credentials
   are actually stored, and warns when the directory every guide names is
   empty so your backup silently captures nothing. From
