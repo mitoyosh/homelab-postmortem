@@ -168,6 +168,8 @@ A WiFi connection and an ethernet connection — the same two types the netplan-
 
 I am deliberately not going to tell you which tool put the `wlan0` profile into netplan, because I could not establish it and I would rather say so. `raspi-config` sets WiFi by shelling out to `nmcli` — there is not one reference to netplan in it — and `nmtui` is part of `network-manager` and goes through the same library. Both of those should therefore land in the keyfile directory, exactly as my test connections did. They did not, for this machine's WiFi profile.
 
+Provisioning on this image has more than one way to look configured and not be. cloud-init arrived with Imager 2.0, and [a top-level `ssh_import_id` in your user-data is silently never read](https://homelabpostmortem.com/2026/08/29/cloud-init-validates-the-key-it-never-reads/) for the kind of user Raspberry Pi's own example creates.
+
 Take that as the practical finding rather than a loose end: **a Pi that has been configured over time can have some of its network state in each store, and which is which is not something you can reason out from the tool you remember using.** You have to look. Backing up either directory alone silently captures part of the picture, and the part it misses is not predictable.
 
 Modifying an existing netplan-backed connection, on the other hand, edits the YAML in place rather than migrating it to a keyfile. Setting a static IP on the (unused, disconnected) `eth0` profile:
