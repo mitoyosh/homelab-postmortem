@@ -102,6 +102,30 @@ CONFIG_NFT_COMPAT=m
 
 `CONFIG_NFT_COMPAT=m` is present. `CONFIG_IP_NF_IPTABLES_LEGACY` produces no output at all — it is unset, and **that** is the symbol that builds `ip_tables.ko` today. `CONFIG_IP_NF_IPTABLES` kept the historic name and now selects the nftables-backed path instead.
 
+A second machine settles that this is a per-build choice rather than something
+inherent to current kernels. On a Proxmox VE 9 host — also Debian 13 underneath,
+but x86_64 and running Proxmox's own kernel build:
+
+```bash
+$ uname -r
+7.0.2-6-pve
+$ grep -E '^CONFIG_IP_NF_IPTABLES(_LEGACY)?=' /boot/config-$(uname -r)
+CONFIG_IP_NF_IPTABLES_LEGACY=m
+CONFIG_IP_NF_IPTABLES=m
+$ sudo modprobe -n -v ip_tables
+$ echo $?
+0
+```
+
+`CONFIG_IP_NF_IPTABLES_LEGACY=m` is set there, `ip_tables.ko` is on disk, and
+`modprobe` resolves it. Same Debian release, same era, opposite decision. Both
+distributions ship their own kernel rather than Debian's stock one, so this is
+not "Debian does X and Raspberry Pi does Y" — it is that the symbol is a build
+flag each kernel packager decides for themselves, and Raspberry Pi has stopped
+setting it while others have not. Which means you cannot carry an assumption
+about legacy iptables from one machine to another, even between two boxes
+running the same Debian release.
+
 Upstream said so plainly, over six months ago. [Phil Elwell answered this on `raspberrypi/linux#7220`](https://github.com/raspberrypi/linux/issues/7220) in February 2026:
 
 > ip_tables has been deprecated in favour of nf_tables. CONFIG_IP_NF_IPTABLES enables an ip_tables-like shim over nf_tables.
