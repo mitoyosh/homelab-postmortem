@@ -143,3 +143,10 @@ nav.more-posts li a { color: var(--fg); text-decoration: none; border-bottom: 1p
 nav.more-posts li a:hover { color: var(--accent); border-bottom-color: var(--accent); }
 .more-posts-date { display: block; font-size: 0.82rem; color: var(--muted); margin-top: 0.15rem; }
 nav.more-posts > p { margin: 0; font-size: 0.9rem; }
+
+/* Tip line under a post. Smaller and dimmer than body text on purpose. */
+.tip {
+  margin: 1.5rem 0 0;
+  font-size: 0.9rem;
+  opacity: 0.75;
+}

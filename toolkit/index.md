@@ -62,7 +62,26 @@ Also relevant if you're building your own delivery pipeline:
 New scripts are added as new incidents happen — this is a living collection,
 not a one-time release.
 
+{% assign live_packs = site.packs | where_exp: "p", "p.buy_url != '' and p.buy_url != nil" %}{% if live_packs.size > 0 %}
+## Pick the checks you need — $5 each
+
+Each pack answers one question and contains only the scripts for it. Buy the one
+that matches what you are about to do; you are not paying for checks that do not
+apply to your machine.
+
+{% for p in live_packs %}
 <div class="callout">
+  <h3>{{ p.title }} — {{ p.price }}</h3>
+  <p><strong>{{ p.question }}</strong></p>
+  <p>{{ p.detail }}</p>
+  <a class="btn" href="{{ p.buy_url }}">Buy {{ p.title }} &rarr;</a>
+</div>
+{% endfor %}
+
+Every script in every pack is also in the complete toolkit below, so there is no
+reason to buy both.
+
+{% endif %}<div class="callout">
   <h3>Get the toolkit — $12</h3>
   <p>
     One-time purchase. The download link is emailed to you immediately, and

@@ -3,6 +3,46 @@ description: >-
   Real, dated postmortems from running a homelab — what broke, how it was
   diagnosed, and the exact fix. Plus the verified scripts that came out of it.
 url: "https://homelabpostmortem.com"
+
+# Tip link. Nothing is rendered on any post while this is empty.
+# GitHub Sponsors takes no platform fee on personal sponsorships, so the whole
+# amount arrives: https://github.com/sponsors/<name>
+tip_url: ""
+tip_label: "Buy me a coffee"
+
+# Toolkit packs. A pack with an empty buy_url is not rendered, so they can be
+# published one at a time as each is ready.
+#
+# Each Stripe Payment Link must carry metadata product=<id>. Without it the
+# delivery Worker falls back to the complete bundle — deliberately, so the
+# original link keeps working, which also means a misconfigured link ships the
+# wrong product silently rather than failing.
+packs:
+  - id: exposure-firewall
+    title: "Exposure &amp; firewall"
+    price: "$5"
+    question: "Is anything reachable from your network that your firewall says is blocked?"
+    detail: "Two checks. Container ports that answer from the LAN while ufw reports them denied, and whether the iptables your tools call has any kernel support left."
+    buy_url: ""
+  - id: backup-restore
+    title: "Backup &amp; restore integrity"
+    price: "$5"
+    question: "Is your backup actually a backup, and will the clone boot?"
+    detail: "Two checks. Where your network config really persists before you archive it, and the stale PARTUUID that stops a successful-looking clone from booting."
+    buy_url: ""
+  - id: persistence
+    title: "Persistence across reboot"
+    price: "$5"
+    question: "Will the settings you just applied still be there after a reboot?"
+    detail: "Three checks. sysctl, the journal, and swap — each a case where the command succeeds, the value reads back, and the next boot disagrees."
+    buy_url: ""
+  - id: provisioning
+    title: "Provisioning verification"
+    price: "$5"
+    question: "Did the machine actually get configured the way you told it to?"
+    detail: "Two checks. The cloud-init key that is valid, schema-checked, and silently ignored — in both directions — and the network profile a provisioning run really produced."
+    buy_url: ""
+
 baseurl: ""
 
 markdown: kramdown
