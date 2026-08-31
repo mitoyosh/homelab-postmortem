@@ -82,10 +82,12 @@ Every script in every pack is also in the complete toolkit below, so there is no
 reason to buy both.
 
 {% endif %}<div class="callout">
-  <h3>Get the toolkit — $12</h3>
+  <h3>Get everything — $15</h3>
   <p>
-    One-time purchase. The download link is emailed to you immediately, and
-    every script added later is part of the same purchase.
+    All eleven scripts, including the two that are not in any pack. Buying the
+    four packs separately is $20, so this is the cheaper route if you want more
+    than two of them. One-time purchase: the download link is emailed to you
+    immediately, and every script added later is part of the same purchase.
   </p>
-  <a class="btn" href="https://buy.stripe.com/5kQ8wOa3y4OwaWf7yM5Vu01">Buy the toolkit &rarr;</a>
+  <a class="btn" href="https://buy.stripe.com/14A28qgrW6WE0hB6uI5Vu06">Buy the toolkit &rarr;</a>
 </div>
