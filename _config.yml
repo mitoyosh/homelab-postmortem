@@ -23,25 +23,25 @@ packs:
     price: "$5"
     question: "Is anything reachable from your network that your firewall says is blocked?"
     detail: "Two checks. Container ports that answer from the LAN while ufw reports them denied, and whether the iptables your tools call has any kernel support left."
-    buy_url: ""
+    buy_url: "https://buy.stripe.com/dRmaEWdfK2GoggzdXa5Vu02"
   - id: backup-restore
     title: "Backup &amp; restore integrity"
     price: "$5"
     question: "Is your backup actually a backup, and will the clone boot?"
     detail: "Two checks. Where your network config really persists before you archive it, and the stale PARTUUID that stops a successful-looking clone from booting."
-    buy_url: ""
+    buy_url: "https://buy.stripe.com/eVq6oGgrWep68O75qE5Vu03"
   - id: persistence
     title: "Persistence across reboot"
     price: "$5"
     question: "Will the settings you just applied still be there after a reboot?"
     detail: "Three checks. sysctl, the journal, and swap — each a case where the command succeeds, the value reads back, and the next boot disagrees."
-    buy_url: ""
+    buy_url: "https://buy.stripe.com/6oUcN41x2ep6fcvaKY5Vu04"
   - id: provisioning
     title: "Provisioning verification"
     price: "$5"
     question: "Did the machine actually get configured the way you told it to?"
     detail: "Two checks. The cloud-init key that is valid, schema-checked, and silently ignored — in both directions — and the network profile a provisioning run really produced."
-    buy_url: ""
+    buy_url: "https://buy.stripe.com/28EcN4fnSa8Q4xR5qE5Vu05"
 
 baseurl: ""
 
