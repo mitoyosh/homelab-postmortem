@@ -62,7 +62,7 @@ Also relevant if you're building your own delivery pipeline:
 New scripts are added as new incidents happen — this is a living collection,
 not a one-time release.
 
-{% assign live_packs = site.packs | where_exp: "p", "p.buy_url != '' and p.buy_url != nil" %}{% if live_packs.size > 0 %}
+{% assign live_packs = site.packs | where_exp: "p", "p.buy_url" | where_exp: "p", "p.buy_url != ''" %}{% if live_packs.size > 0 %}
 ## Pick the checks you need — $5 each
 
 Each pack answers one question and contains only the scripts for it. Buy the one
