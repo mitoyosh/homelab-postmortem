@@ -167,3 +167,10 @@ is written for a human who is watching. An exit status is the only thing a
 program downstream can see. When those two disagree, the human sees a failure
 and the machine sees success — and the pipeline keeps running on the machine's
 version.
+
+The same project does it again at build time, in a field you are more likely to
+quote than to check: [`llama-cli --version` reports a commit hash belonging to
+whatever repository you unpacked the source
+inside](https://homelabpostmortem.com/2026/09/05/llama-cpp-stamps-a-foreign-repos-commit/).
+Confidently, with no warning, and with the one guard that could have caught it
+structurally unable to fire.
