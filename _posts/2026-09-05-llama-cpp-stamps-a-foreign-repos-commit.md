@@ -252,3 +252,10 @@ reported success in a field that was not true —
 is the same failure at runtime. When you report a bug upstream, the first thing
 you are asked for is `--version` output. It is worth knowing that the line can
 be confidently, specifically wrong.
+
+The same shape shows up two days later in the artifact rather than the build
+metadata: [an Ollama tag that pulls and runs and streams fluent text with no
+working code in
+it](https://homelabpostmortem.com/2026/09/07/ollama-library-quant-is-broken-not-the-quant-level/),
+where every surrounding signal — verified download, correct file size, normal
+token rate, HTTP 200 — reports success and only the content is wrong.
