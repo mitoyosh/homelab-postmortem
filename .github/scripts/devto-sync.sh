@@ -41,6 +41,26 @@ if [ -z "$TITLE" ]; then
   exit 1
 fi
 
+# dev.to rejects titles over 128 characters with HTTP 422, and it does so at
+# publish time -- after the cover has been resolved and the body assembled, so
+# the failure reads like a problem with the post rather than with one field.
+# A post can therefore carry `devto_title:` to override the site title, which
+# is free to be longer and more specific.
+DEVTO_TITLE=$(echo "$FRONT_MATTER" | grep '^devto_title:' | sed -E 's/^devto_title:[[:space:]]*"?([^"]*)"?[[:space:]]*$/\1/')
+if [ -n "$DEVTO_TITLE" ]; then
+  TITLE="$DEVTO_TITLE"
+fi
+
+# Check it here rather than letting the API say so, and refuse rather than
+# truncating: a title cut at 128 bytes mid-clause is worse than a clear failure.
+TITLE_LEN=${#TITLE}
+if [ "$TITLE_LEN" -gt 128 ]; then
+  echo "Title is $TITLE_LEN characters; dev.to allows 128." >&2
+  echo "Add a shorter 'devto_title:' to the front matter of $FILE." >&2
+  echo "  title: $TITLE" >&2
+  exit 1
+fi
+
 # Liquid that Jekyll would have rendered must not reach dev.to verbatim — it
 # would show as literal text or a broken link (this bit us once already, in the
 # 2026-08-16/17 toolkit links).

@@ -5,6 +5,15 @@ on:
     branches: [main]
     paths:
       - '_posts/**.md'
+  # The push trigger only picks up *newly added* posts, so a sync that fails
+  # (a too-long title, a transient dev.to error) cannot be retried by editing
+  # and pushing again. This lets one file be re-sent by hand.
+  workflow_dispatch:
+    inputs:
+      file:
+        description: 'Post path to sync, e.g. _posts/2026-09-07-slug.md'
+        required: true
+        type: string
 
 jobs:
   sync:
@@ -18,7 +27,11 @@ jobs:
       - name: Find newly added posts
         id: find
         run: |
-          ADDED=$(git diff --diff-filter=A --name-only HEAD^ HEAD -- '_posts/*.md' || true)
+          if [ -n "${{ inputs.file }}" ]; then
+            ADDED="${{ inputs.file }}"
+          else
+            ADDED=$(git diff --diff-filter=A --name-only HEAD^ HEAD -- '_posts/*.md' || true)
+          fi
           echo "files<<DEVTO_EOF" >> "$GITHUB_OUTPUT"
           echo "$ADDED" >> "$GITHUB_OUTPUT"
           echo "DEVTO_EOF" >> "$GITHUB_OUTPUT"

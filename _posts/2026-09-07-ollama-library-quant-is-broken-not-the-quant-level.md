@@ -2,6 +2,7 @@
 title: "An Ollama library tag that pulls, runs, and streams fluent text with no working code in it. The same model at the same quantisation, converted by someone else, is fine."
 date: 2026-09-07
 excerpt: "qwen2.5-coder:3b-instruct-q3_K_M downloads cleanly, loads at normal speed and answers every prompt. It scored 0/3 on trivial coding tasks here. The q4_K_M sibling scored 3/3, and so did the official Qwen GGUF at the same q3_K_M level with the same template — so it is not that 3B at q3 is too small. It is that conversion."
+devto_title: "An Ollama tag that pulls and runs and has no working code in it. The same model at the same quantisation, elsewhere, is fine."
 devto_tags: ai, ollama, llm, devops
 ---
 
