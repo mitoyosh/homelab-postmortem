@@ -47,7 +47,7 @@ packs:
     price: "$5"
     question: "Is the model, adapter, or build you just installed the thing it says it is?"
     detail: "Three checks. An Ollama quantisation that pulls and runs and returns no working code, a LoRA adapter accepted and applied to zero layers, and a build that reports a commit hash from a repository it has never heard of."
-    buy_url: ""
+    buy_url: "https://buy.stripe.com/cNiaEWb7C0yge8rcT65Vu07"
 
 baseurl: ""
 
