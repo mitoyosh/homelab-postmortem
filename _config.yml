@@ -42,6 +42,12 @@ packs:
     question: "Did the machine actually get configured the way you told it to?"
     detail: "Two checks. The cloud-init key that is valid, schema-checked, and silently ignored — in both directions — and the network profile a provisioning run really produced."
     buy_url: "https://buy.stripe.com/28EcN4fnSa8Q4xR5qE5Vu05"
+  - id: local-llm
+    title: "Local LLM artifacts"
+    price: "$5"
+    question: "Is the model, adapter, or build you just installed the thing it says it is?"
+    detail: "Three checks. An Ollama quantisation that pulls and runs and returns no working code, a LoRA adapter accepted and applied to zero layers, and a build that reports a commit hash from a repository it has never heard of."
+    buy_url: ""
 
 baseurl: ""
 

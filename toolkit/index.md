@@ -81,12 +81,13 @@ apply to your machine.
 Every script in every pack is also in the complete toolkit below, so there is no
 reason to buy both.
 
-{% endif %}<div class="callout">
-  <h3>Get everything — $15</h3>
+{% endif %}{% assign pack_total = live_packs.size | times: 5 %}<div class="callout">
+  <h3>Get everything &mdash; $15</h3>
   <p>
-    All eleven scripts, including the two that are not in any pack. Buying the
-    four packs separately is $20, so this is the cheaper route if you want more
-    than two of them. One-time purchase: the download link is emailed to you
+    Every script in the toolkit, including the ones that are not in any pack.
+    {% if live_packs.size > 3 %}Buying the {{ live_packs.size }} packs separately is
+    ${{ pack_total }}, so this is the cheaper route if you want more than two of
+    them.{% endif %} One-time purchase: the download link is emailed to you
     immediately, and every script added later is part of the same purchase.
   </p>
   <a class="btn" href="https://buy.stripe.com/14A28qgrW6WE0hB6uI5Vu06">Buy the toolkit &rarr;</a>
