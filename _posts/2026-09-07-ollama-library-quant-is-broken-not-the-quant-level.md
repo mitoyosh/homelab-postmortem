@@ -207,3 +207,11 @@ heard of](https://homelabpostmortem.com/2026/09/05/llama-cpp-stamps-a-foreign-re
 the thing doing the reporting is not the thing you are trying to measure, and
 when they disagree, you will believe the wrong one unless you have arranged in
 advance to tell them apart.
+
+The same ordering saved a second finding the same day. [vLLM accepts a LoRA
+adapter it has already decided not to apply
+anywhere](https://homelabpostmortem.com/2026/09/07/vllm-accepts-a-lora-it-will-never-apply/)
+returns base-model output for the ignored adapter — which is also what an
+untrained adapter returns when it *is* applied. Only running the overlapping
+allow-list first, and watching the same file change the output, made the
+identical result mean anything.
