@@ -6,6 +6,27 @@ devto_title: "An Ollama tag that pulls and runs and has no working code in it. T
 devto_tags: ai, ollama, llm, devops
 ---
 
+**Update (2026-09-09)**: the reporter has published the full audit as a
+preprint — [*Broken on Arrival: Silently Defective LLM Artifacts in Public Model
+Registries and How to Catch Them*](https://arxiv.org/abs/2609.05881) (Aditi
+Patodiya, 2026), with the dataset and tooling at
+[aditi-p31/quantcheck](https://github.com/aditi-p31/quantcheck). It executed 327
+quantised code-capable artifacts, 305 of them from the official Ollama library,
+and confirmed **five** silently defective ones: the batch of four
+Qwen2.5-Coder-3B conversions that the `q3_K_M` below belongs to, plus
+`phi3.5:3.8b-mini-instruct-q2_K`. That is 1.6% of the official artifacts tested.
+**This post only ever tested `q3_K_M`** — the three siblings and the phi3.5 case
+are the census's result, not mine.
+
+One of its findings is a caveat on my own advice, so it goes at the top rather
+than the bottom. **Two of the five defects produce output whose surface
+statistics sit inside the healthy range.** The ten-second check further down
+this page — look for a missing `def` and `return` — is calibrated against the
+artifact I actually had, where the output was a stray `.` and a stray `00`. It
+would not catch those two. Reading the output is a filter, not a test; if you
+want a test, run what comes back, which is what [the toolkit
+script](https://homelabpostmortem.com/toolkit/) does and what the census does.
+
 **TL;DR**: `ollama pull qwen2.5-coder:3b-instruct-q3_K_M` succeeds, `ollama run` streams at normal speed, and nothing anywhere reports a problem. On three trivial HumanEval-style tasks it produced **no implementation at all** — 0/3. The obvious conclusion is that 3B at q3 is simply too degraded to code. That conclusion is wrong, and one control disproves it: the **official Qwen GGUF at the same q3_K_M level**, imported with the library model's own template so only the weights differ, scored **3/3** on the same tasks. The failure is in that conversion, not in the quantisation level.
 
 ## The symptom
@@ -170,7 +191,14 @@ curl -s http://127.0.0.1:11434/api/generate -d '{
 ```
 
 If what comes back has no `def` and no `return` in it, you have this. It takes
-about ten seconds and it is the only signal you are going to get.
+about ten seconds.
+
+**It is a filter, not a test.** It catches the shape of failure I had, where
+there was nothing resembling code in the response at all. It does not catch a
+defective artifact that emits a plausible-looking function which does not work
+— and per the census in the update at the top, two of the five confirmed
+defects are exactly that. The only check that separates them is to paste the
+returned block into a file and run it against assertions you wrote yourself.
 
 ## The generalisable habit
 
