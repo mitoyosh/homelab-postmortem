@@ -1,10 +1,19 @@
 #!/usr/bin/env bash
-# Publish one newly-added _posts/*.md file to dev.to via the API, published
-# immediately (no draft step), with canonical_url pointing back at the
-# original post so search engines credit homelabpostmortem.com as the source.
+# Publish one _posts/*.md file to dev.to via the API, published immediately
+# (no draft step), with canonical_url pointing back at the original post so
+# search engines credit homelabpostmortem.com as the source.
 #
 # Usage: devto-sync.sh _posts/YYYY-MM-DD-slug.md
 # Requires: DEV_TO_API_KEY env var, curl, jq
+#
+# 2026-09-09: this script used to POST unconditionally, so a post that was
+# corrected after syncing left dev.to serving the wrong advice and there was no
+# safe way to fix it — re-dispatching would have created a duplicate article.
+# It now looks the article up by canonical_url first and PUTs when it exists.
+#
+# The lookup failing is a hard error on purpose. Falling back to POST when we
+# could not determine whether the article already exists is exactly how you get
+# the duplicate this change was written to prevent.
 
 set -euo pipefail
 
@@ -118,19 +127,65 @@ PAYLOAD=$(jq -n \
   '{article: {title: $title, published: true, body_markdown: $body, tags: $tags, canonical_url: $canonical}}
    | if $cover != "" then .article.main_image = $cover else . end')
 
-echo "Publishing '$TITLE' -> $CANONICAL_URL (tags: $TAGS_JSON)"
+# Does this post already exist on dev.to? /articles/me/all lists the
+# authenticated user's own articles, drafts included, and carries canonical_url.
+# Match on that rather than on the title: the title is what a correction is most
+# likely to change, and canonical_url is derived from the filename, which is
+# stable for the life of the post.
+EXISTING_ID=""
+PAGE=1
+while : ; do
+  LIST_RESPONSE=$(curl -sS -w '\n%{http_code}' -X GET \
+    "https://dev.to/api/articles/me/all?per_page=100&page=${PAGE}" \
+    -H "api-key: $DEV_TO_API_KEY")
+  LIST_CODE=$(echo "$LIST_RESPONSE" | tail -n1)
+  LIST_BODY=$(echo "$LIST_RESPONSE" | sed '$d')
+  if [ "$LIST_CODE" -lt 200 ] || [ "$LIST_CODE" -ge 300 ]; then
+    echo "Could not list existing dev.to articles (HTTP $LIST_CODE). Refusing to" >&2
+    echo "POST blind, because that would duplicate the article if it exists." >&2
+    echo "$LIST_BODY" >&2
+    exit 1
+  fi
+  COUNT=$(echo "$LIST_BODY" | jq 'length')
+  [ "$COUNT" -eq 0 ] && break
+  MATCH=$(echo "$LIST_BODY" | jq -r --arg c "$CANONICAL_URL" \
+    'map(select(.canonical_url == $c)) | .[0].id // empty')
+  if [ -n "$MATCH" ]; then EXISTING_ID="$MATCH"; break; fi
+  PAGE=$((PAGE + 1))
+  # /articles/me/all has no documented page cap; stop somewhere rather than
+  # looping forever if the API starts returning the same page.
+  [ "$PAGE" -gt 20 ] && break
+done
 
-RESPONSE=$(curl -sS -w '\n%{http_code}' -X POST https://dev.to/api/articles \
-  -H "api-key: $DEV_TO_API_KEY" \
-  -H "Content-Type: application/json" \
-  -d "$PAYLOAD")
+if [ -n "$EXISTING_ID" ]; then
+  echo "Updating dev.to article $EXISTING_ID: '$TITLE' -> $CANONICAL_URL (tags: $TAGS_JSON)"
+  RESPONSE=$(curl -sS -w '\n%{http_code}' -X PUT "https://dev.to/api/articles/${EXISTING_ID}" \
+    -H "api-key: $DEV_TO_API_KEY" \
+    -H "Content-Type: application/json" \
+    -d "$PAYLOAD")
+  VERB="Updated"
+elif [ "${DEVTO_UPDATE_ONLY:-0}" = "1" ]; then
+  # Safety valve for the first run of the lookup path, and for any run where a
+  # duplicate would be worse than no sync: refuse to create, only ever update.
+  echo "No dev.to article found with canonical_url $CANONICAL_URL, and" >&2
+  echo "DEVTO_UPDATE_ONLY=1, so nothing was created. If you expected an" >&2
+  echo "existing article, the lookup is wrong — fix that before creating one." >&2
+  exit 1
+else
+  echo "Publishing '$TITLE' -> $CANONICAL_URL (tags: $TAGS_JSON)"
+  RESPONSE=$(curl -sS -w '\n%{http_code}' -X POST https://dev.to/api/articles \
+    -H "api-key: $DEV_TO_API_KEY" \
+    -H "Content-Type: application/json" \
+    -d "$PAYLOAD")
+  VERB="Published"
+fi
 
 HTTP_CODE=$(echo "$RESPONSE" | tail -n1)
 BODY_RESPONSE=$(echo "$RESPONSE" | sed '$d')
 
 if [ "$HTTP_CODE" -ge 200 ] && [ "$HTTP_CODE" -lt 300 ]; then
   URL=$(echo "$BODY_RESPONSE" | jq -r '.url // "unknown"')
-  echo "Published: $URL"
+  echo "${VERB}: $URL"
 else
   echo "dev.to API returned HTTP $HTTP_CODE:" >&2
   echo "$BODY_RESPONSE" >&2
