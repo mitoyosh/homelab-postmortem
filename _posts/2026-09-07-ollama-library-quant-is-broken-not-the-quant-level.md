@@ -12,11 +12,39 @@ Registries and How to Catch Them*](https://arxiv.org/abs/2609.05881) (Aditi
 Patodiya, 2026), with the dataset and tooling at
 [aditi-p31/quantcheck](https://github.com/aditi-p31/quantcheck). It executed 327
 quantised code-capable artifacts, 305 of them from the official Ollama library,
-and confirmed **five** silently defective ones: the batch of four
-Qwen2.5-Coder-3B conversions that the `q3_K_M` below belongs to, plus
-`phi3.5:3.8b-mini-instruct-q2_K`. That is 1.6% of the official artifacts tested.
-**This post only ever tested `q3_K_M`** — the three siblings and the phi3.5 case
-are the census's result, not mine.
+and confirmed silently defective artifacts in the official library, including
+the batch of four Qwen2.5-Coder-3B conversions that the `q3_K_M` below belongs
+to. **This post only ever tested `q3_K_M`** — the three siblings are the
+census's result, not mine.
+
+**Correction (2026-09-10)**: the paragraph above first said *five* defects,
+including `phi3.5:3.8b-mini-instruct-q2_K`. **The author has since retracted the
+phi3.5 case and the count is four.** The retraction came out of the control this
+site asked for: an independent conversion of phi3.5 at `q2_K` *with no
+importance matrix* fails identically (0/15), which is genuine capability
+collapse at that quantisation, not a bad file. The original referee had been an
+imatrix build, and that is what made phi3.5 look like an outlier. The four
+Qwen artifacts came through the same re-run stronger, not weaker — the model
+author's own no-imatrix conversions score 14/15 at `q2_K` and 15/15 at
+`q3_K_M`, where the library artifacts score zero. A revised preprint is going
+to arXiv.
+
+Worth carrying away, because it is what caused the error: the replacement
+referee turned out to be **the same file under a different name.** The library's
+phi3.5 `q2_K` blob is byte-identical to uploads in two separate HuggingFace
+repositories — verified here without downloading anything, since Ollama's
+registry manifest gives the layer digest and HuggingFace returns the file's
+SHA-256 in the `x-linked-etag` header:
+
+```
+ollama library  phi3.5:3.8b-mini-instruct-q2_K   54d47caa8bf3…
+QuantFactory/Phi-3.5-mini-instruct.Q2_K.gguf     54d47caa8bf3…
+neopolita/phi-3.5-mini-instruct_q2_k.gguf        54d47caa8bf3…
+bartowski/Phi-3.5-mini-instruct-Q2_K.gguf        7425cb5fec0d…   (imatrix build)
+```
+
+**A different repository is not evidence of a different conversion.** Only the
+hash settles it, and you can get the hash without transferring the file.
 
 One of its findings is a caveat on my own advice, so it goes at the top rather
 than the bottom. **Two of the five defects produce output whose surface
