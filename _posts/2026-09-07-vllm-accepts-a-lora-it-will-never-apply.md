@@ -125,3 +125,9 @@ It is the same trap as [an Ollama tag that pulls and runs and has no working cod
 it](https://homelabpostmortem.com/2026/09/07/ollama-library-quant-is-broken-not-the-quant-level/),
 where the control had to run first to catch a broken harness. Both times the failing observation was
 available immediately and agreed with the report, and both times it would have been the wrong reason.
+
+The same "accepted, then not applied" shape turned up in llama.cpp a few days later:
+[llama-server takes the `json_schema` form its own README documents, returns 200, and
+generates as if no `response_format` was sent](https://homelabpostmortem.com/2026/09/12/llama-server-ignores-the-response-format-its-readme-shows/).
+There the control is even simpler — remove the constraint and see whether the bytes change —
+and it is the only way to tell a server that enforced from a model that cooperated.

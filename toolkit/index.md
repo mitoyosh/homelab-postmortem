@@ -43,6 +43,10 @@ destructive, dry-run modes where it matters.
   that will never be read, before you flash the card and find out the
   headless way. From
   [cloud-init calls your user-data valid]({{ '/2026/08/29/cloud-init-validates-the-key-it-never-reads/' | relative_url }}).
+- **`check-llama-response-format.sh`** — tells you which `response_format`
+  forms a running `llama-server` actually enforces. The one its README shows
+  is accepted and ignored. From
+  [llama-server ignores the response_format its own README shows]({{ '/2026/09/12/llama-server-ignores-the-response-format-its-readme-shows/' | relative_url }}).
 - **`check-cloudinit-instance-id.sh`** — answers whether a `user-data` you
   place on a disk will be acted on at all. On a plain image write it will not
   be, and cloud-init logs the skip as `SUCCESS`. From
