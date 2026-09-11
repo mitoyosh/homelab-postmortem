@@ -40,7 +40,7 @@ packs:
     title: "Provisioning verification"
     price: "$5"
     question: "Did the machine actually get configured the way you told it to?"
-    detail: "Two checks. The cloud-init key that is valid, schema-checked, and silently ignored — in both directions — and the network profile a provisioning run really produced."
+    detail: "Three checks. The cloud-init key that is valid, schema-checked, and silently ignored — in both directions — whether your user-data will be acted on at all or parsed and skipped, and the network profile a provisioning run really produced."
     buy_url: "https://buy.stripe.com/28EcN4fnSa8Q4xR5qE5Vu05"
   - id: local-llm
     title: "Local LLM artifacts"

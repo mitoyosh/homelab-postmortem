@@ -43,6 +43,10 @@ destructive, dry-run modes where it matters.
   that will never be read, before you flash the card and find out the
   headless way. From
   [cloud-init calls your user-data valid]({{ '/2026/08/29/cloud-init-validates-the-key-it-never-reads/' | relative_url }}).
+- **`check-cloudinit-instance-id.sh`** — answers whether a `user-data` you
+  place on a disk will be acted on at all. On a plain image write it will not
+  be, and cloud-init logs the skip as `SUCCESS`. From
+  [cloud-init never reads the instance-id Raspberry Pi OS sets]({{ '/2026/09/11/cloud-init-never-reads-the-instance-id-you-set/' | relative_url }}).
 - **`check-iptables-backend.sh`** — tells you whether legacy iptables can
   work on this kernel at all, before you install something that assumes it.
   From
