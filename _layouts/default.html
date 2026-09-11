@@ -3,9 +3,55 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  {%- comment -%}
+    2026-09-11: canonical + Open Graph were both missing. Every link shared into
+    Slack, X, Discord or a GitHub comment rendered as a bare URL, while the cover
+    images dev.to already uses sat unused on this side. Since this site's whole
+    distribution is people pasting links, that was the cheapest thing left to fix.
+
+    The cover path is derived from the post's source filename and emitted ONLY if
+    the file exists — the same `site.static_files` check post.html uses for
+    JSON-LD. A preview that 404s is worse than no preview, and `page.basename_without_ext`
+    looks like the right variable but is empty on documents (it exists on static
+    files), which is how the JSON-LD image silently disappeared once already.
+
+    Non-post pages get no og:image rather than a borrowed one, and fall back to
+    twitter:card=summary so the card still renders with title and description.
+  {%- endcomment -%}
+  {%- assign base_desc = page.excerpt | default: site.description | strip_html | strip_newlines -%}
+  {%- assign page_title = page.title | default: site.title -%}
+  {%- assign og_image = "" -%}
+  {%- if page.path contains "_posts/" -%}
+    {%- assign cover_slug = page.path | replace: "_posts/", "" | replace: ".md", "" -%}
+    {%- assign cover_path = "/assets/covers/" | append: cover_slug | append: ".png" -%}
+    {%- assign cover_file = site.static_files | where: "path", cover_path | first -%}
+    {%- if cover_file -%}{%- assign og_image = site.url | append: cover_path -%}{%- endif -%}
+  {%- endif -%}
   <title>{% if page.title %}{{ page.title }} — {% endif %}{{ site.title }}</title>
-  <meta name="description" content="{{ page.excerpt | default: site.description | strip_html | strip_newlines | truncate: 160 }}">
+  <meta name="description" content="{{ base_desc | truncate: 160 | escape }}">
+  <link rel="canonical" href="{{ page.url | absolute_url }}">
   <meta name="google-site-verification" content="7lyIuXamNH9WuL2-RyUcX72SJySQ9fqJF0wrofAdIgo" />
+
+  <meta property="og:site_name" content="{{ site.title | escape }}">
+  <meta property="og:type" content="{% if page.date %}article{% else %}website{% endif %}">
+  <meta property="og:title" content="{{ page_title | escape }}">
+  <meta property="og:description" content="{{ base_desc | truncate: 200 | escape }}">
+  <meta property="og:url" content="{{ page.url | absolute_url }}">
+  <meta property="og:locale" content="en_GB">
+  <meta name="twitter:title" content="{{ page_title | escape }}">
+  <meta name="twitter:description" content="{{ base_desc | truncate: 200 | escape }}">
+{%- if og_image != "" %}
+  <meta property="og:image" content="{{ og_image }}">
+  <meta property="og:image:width" content="1000">
+  <meta property="og:image:height" content="420">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="{{ og_image }}">
+{%- else %}
+  <meta name="twitter:card" content="summary">
+{%- endif %}
+{%- if page.date %}
+  <meta property="article:published_time" content="{{ page.date | date_to_xmlschema }}">
+{%- endif %}
   <link rel="stylesheet" href="{{ '/assets/style.css' | relative_url }}">
   <link rel="alternate" type="application/rss+xml" title="{{ site.title }}" href="{{ '/feed.xml' | relative_url }}">
 </head>
