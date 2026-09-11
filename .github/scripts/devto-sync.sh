@@ -33,7 +33,11 @@ fi
 BASENAME=$(basename "$FILE" .md)
 # _posts filenames are YYYY-MM-DD-slug.md; Jekyll's permalink
 # (/:year/:month/:day/:title/) derives the URL from exactly this.
-DATE_PART=$(echo "$BASENAME" | grep -oE '^[0-9]{4}-[0-9]{2}-[0-9]{2}')
+DATE_PART=$(echo "$BASENAME" | grep -oE '^[0-9]{4}-[0-9]{2}-[0-9]{2}' || true)
+if [ -z "$DATE_PART" ]; then
+  echo "$FILE does not start with YYYY-MM-DD; cannot derive the canonical URL." >&2
+  exit 1
+fi
 SLUG=$(echo "$BASENAME" | sed -E 's/^[0-9]{4}-[0-9]{2}-[0-9]{2}-//')
 YEAR=$(echo "$DATE_PART" | cut -d- -f1)
 MONTH=$(echo "$DATE_PART" | cut -d- -f2)
@@ -44,7 +48,11 @@ CANONICAL_URL="${SITE_URL}/${YEAR}/${MONTH}/${DAY}/${SLUG}/"
 FRONT_MATTER=$(awk 'BEGIN{c=0} /^---[[:space:]]*$/{c++; next} c==1{print}' "$FILE")
 BODY=$(awk 'BEGIN{c=0} /^---[[:space:]]*$/{c++; next} c>=2{print}' "$FILE")
 
-TITLE=$(echo "$FRONT_MATTER" | grep '^title:' | sed -E 's/^title:[[:space:]]*"?([^"]*)"?[[:space:]]*$/\1/')
+# `|| true` is load-bearing on every one of these greps. The script runs under
+# `set -euo pipefail`, so a grep that matches nothing fails the pipeline and
+# kills the script THERE — before the check below can say which field was
+# missing. The guard exists; without `|| true` it never gets to speak.
+TITLE=$(echo "$FRONT_MATTER" | grep '^title:' | sed -E 's/^title:[[:space:]]*"?([^"]*)"?[[:space:]]*$/\1/' || true)
 if [ -z "$TITLE" ]; then
   echo "Could not extract a title from $FILE front matter; skipping" >&2
   exit 1
@@ -55,7 +63,13 @@ fi
 # the failure reads like a problem with the post rather than with one field.
 # A post can therefore carry `devto_title:` to override the site title, which
 # is free to be longer and more specific.
-DEVTO_TITLE=$(echo "$FRONT_MATTER" | grep '^devto_title:' | sed -E 's/^devto_title:[[:space:]]*"?([^"]*)"?[[:space:]]*$/\1/')
+# 2026-09-11: this line had no `|| true` and silently killed the sync for every
+# post without a devto_title — which is 16 of 19, since the field only exists
+# from 2026-09-07. It never fired while the workflow was --diff-filter=A,
+# because only newly added posts were ever passed in. Widening that to AM on
+# 2026-09-09 so corrections would propagate is what surfaced it: the first
+# edit to an older post exited 1 with no output at all.
+DEVTO_TITLE=$(echo "$FRONT_MATTER" | grep '^devto_title:' | sed -E 's/^devto_title:[[:space:]]*"?([^"]*)"?[[:space:]]*$/\1/' || true)
 if [ -n "$DEVTO_TITLE" ]; then
   TITLE="$DEVTO_TITLE"
 fi
