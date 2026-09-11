@@ -205,6 +205,15 @@ So the habit is narrow: **a validator passing tells you the file parsed, not tha
 
 The wider one is about partial success. One SSH directive worked and one did not, and that is the shape that costs the most time, because working evidence is louder than absent evidence. You look at `authorized_keys`, see a key, and conclude the mechanism works — when what you have confirmed is that a *different* mechanism works. The same trap as [a WiFi profile that exists with the right SSID and no credentials](https://homelabpostmortem.com/2026/08/19/nmcli-abbreviation-ambiguity-trixie/): the thing you can see being right is not evidence about the thing you cannot.
 
+There is a second way for a cloud-init file to be read and not acted on, and it
+does not involve the schema at all: if the disk has booted once before, the
+`once-per-instance` modules are already spent, and [the stock `meta-data` names
+the instance-id key with an underscore so the id can never
+change](https://homelabpostmortem.com/2026/09/11/cloud-init-never-reads-the-instance-id-you-set/).
+Your `users:` block is parsed, merged, written back out — and skipped, with
+`SUCCESS` in the log. Worth ruling out before you go hunting for a typo in a
+file that does not have one.
+
 I fell into a version of that writing this. The mechanism was read correctly
 from the source, the failing case was reproduced, and the fix was tested — on
 the `users:` form, which is what the documentation shows. It never occurred to
