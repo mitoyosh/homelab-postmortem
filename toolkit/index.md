@@ -43,6 +43,10 @@ destructive, dry-run modes where it matters.
   that will never be read, before you flash the card and find out the
   headless way. From
   [cloud-init calls your user-data valid]({{ '/2026/08/29/cloud-init-validates-the-key-it-never-reads/' | relative_url }}).
+- **`check-docker-log-integrity.sh`** — tells you whether `docker logs` is
+  returning everything on disk, or stopping at a NUL byte with exit 0 and
+  hiding the rest. From
+  [docker logs stops at a NUL byte and exits 0]({{ '/2026/09/12/docker-logs-stops-at-a-nul-byte-and-exits-0/' | relative_url }}).
 - **`check-llama-response-format.sh`** — tells you which `response_format`
   forms a running `llama-server` actually enforces. The one its README shows
   is accepted and ignored. From

@@ -34,7 +34,7 @@ packs:
     title: "Persistence across reboot"
     price: "$5"
     question: "Will the settings you just applied still be there after a reboot?"
-    detail: "Three checks. sysctl, the journal, and swap — each a case where the command succeeds, the value reads back, and the next boot disagrees."
+    detail: "Four checks. sysctl, the journal, swap, and Docker container logs after a power loss — each a case where the command succeeds, the value reads back, and the next boot disagrees."
     buy_url: "https://buy.stripe.com/6oUcN41x2ep6fcvaKY5Vu04"
   - id: provisioning
     title: "Provisioning verification"
