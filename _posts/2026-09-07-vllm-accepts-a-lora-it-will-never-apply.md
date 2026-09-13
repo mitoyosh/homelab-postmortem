@@ -6,6 +6,8 @@ excerpt: "Restrict a deployment with --lora-target-modules and load an adapter w
 devto_tags: ai, vllm, llm, devops
 ---
 
+**Update (2026-09-13)**: the fix has landed. [`vllm-project/vllm#55310`](https://github.com/vllm-project/vllm/pull/55310) merged on 2026-09-09 and closed the issue, so vLLM built from `main` after that commit rejects an adapter whose modules fall entirely outside `--lora-target-modules` instead of accepting it and applying it to nothing. Released versions up to and including 0.28.0 — the one this post reproduced on — still have the behaviour described below. The toolkit's `check-lora-target-overlap.sh` remains the way to catch it on those.
+
 **TL;DR**: `vllm serve --lora-target-modules qkv_proj` plus an adapter that only touches `down_proj` is a combination vLLM accepts. It loads the adapter, compiles the LoRA kernels, and then wraps zero layers with it — every request comes back as the unmodified base model, byte for byte, with no error, no rejection, and no warning that mentions `target_modules`. The acceptance path reads `supported_lora_modules`; the application path reads that **and** `lora_config.target_modules`. The second list is the one you set on the command line, and only one of the two checks has heard of it.
 
 ## The symptom
@@ -86,7 +88,7 @@ Not everyone, and the shape of who matters, because it explains why a bug this l
 
 ## The fix
 
-Upstream has one in flight: [`vllm-project/vllm#55310`](https://github.com/vllm-project/vllm/pull/55310), "Reject adapters with no matching target modules", open and unmerged at the time of writing. Until it lands, nothing in vLLM will tell you.
+Upstream has fixed it: [`vllm-project/vllm#55310`](https://github.com/vllm-project/vllm/pull/55310), "Reject adapters with no matching target modules", was open when this was written and merged on 2026-09-09. On any release up to 0.28.0, nothing in vLLM will tell you.
 
 **Check the two lists against each other before you deploy.** The adapter states its own in `adapter_config.json`:
 
