@@ -43,6 +43,10 @@ destructive, dry-run modes where it matters.
   that will never be read, before you flash the card and find out the
   headless way. From
   [cloud-init calls your user-data valid]({{ '/2026/08/29/cloud-init-validates-the-key-it-never-reads/' | relative_url }}).
+- **`check-responses-state.sh`** — tells you whether a Responses-API server
+  honours `previous_response_id` or accepts it, returns 200, and forgets the
+  conversation. Ollama does the second. From
+  [Ollama's Responses API accepts previous_response_id and starts every turn from nothing]({{ '/2026/09/14/ollama-responses-api-drops-previous-response-id/' | relative_url }}).
 - **`check-docker-log-integrity.sh`** — tells you whether `docker logs` is
   returning everything on disk, or stopping at a NUL byte with exit 0 and
   hiding the rest. From
