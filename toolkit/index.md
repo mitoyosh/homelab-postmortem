@@ -43,6 +43,12 @@ destructive, dry-run modes where it matters.
   that will never be read, before you flash the card and find out the
   headless way. From
   [cloud-init calls your user-data valid]({{ '/2026/08/29/cloud-init-validates-the-key-it-never-reads/' | relative_url }}).
+- **`check-tool-param-names.sh`** — finds tool parameters named `type`,
+  `description`, `required`, `properties` or `nullable`, which Ollama's gemma4
+  renderer never shows the model while still marking them required — so the
+  model omits the argument or makes one up. Checks a tools file statically, or
+  probes a live server. From
+  [Ollama's gemma4 renderer never shows the model a tool parameter named type]({{ '/2026/09/16/ollama-gemma4-drops-tool-parameters-named-type/' | relative_url }}).
 - **`check-responses-state.sh`** — tells you whether a Responses-API server
   honours `previous_response_id` or accepts it, returns 200, and forgets the
   conversation. Ollama does the second. From
