@@ -43,6 +43,12 @@ destructive, dry-run modes where it matters.
   that will never be read, before you flash the card and find out the
   headless way. From
   [cloud-init calls your user-data valid]({{ '/2026/08/29/cloud-init-validates-the-key-it-never-reads/' | relative_url }}).
+- **`check-embd-determinism.sh`** — tells you whether decoding through
+  `llama_batch.embd` gives the same logits every time on your build and model,
+  and when it does not, confirms whether the cause is the known heap over-read:
+  on M-RoPE models the batch code reads four positions per token from an array
+  the header told you to size at one. From
+  [llama.cpp reads past your pos array on every embedding batch for an M-RoPE model]({{ '/2026/09/16/llama-cpp-reads-past-your-pos-array-for-embedding-batches-on-mrope-models/' | relative_url }}).
 - **`check-tool-param-names.sh`** — finds tool parameters named `type`,
   `description`, `required`, `properties` or `nullable`, which Ollama's gemma4
   renderer never shows the model while still marking them required — so the
