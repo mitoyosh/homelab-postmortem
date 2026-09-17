@@ -35,6 +35,12 @@ destructive, dry-run modes where it matters.
   disappear at the next reboot, and checks for the compatibility symlink that
   decides which way it goes. From
   [sysctl -p says it worked]({{ '/2026/08/19/etc-sysctl-conf-not-read-at-boot/' | relative_url }}).
+- **`check-wifi-autoconnect-block.sh`** — tells you whether NetworkManager
+  will bring WiFi back on its own after one failed WPA handshake. On Trixie it
+  will not: the profile is blocked from autoconnect and a headless Pi stays
+  offline until someone runs `nmcli connection up`. Reports exposure and, on
+  request, installs the 30-second timer that does it for you. From
+  [One failed WPA handshake and a headless Pi on Trixie stays off WiFi]({{ '/2026/09/18/trixie-networkmanager-one-failed-handshake-and-the-pi-stays-off-wifi/' | relative_url }}).
 - **`check-nmcli-provisioning.sh`** — flags the `nmcli` abbreviation that
   NetworkManager 1.52 made ambiguous, and WiFi profiles left with no key
   management that look configured and can never associate. From
