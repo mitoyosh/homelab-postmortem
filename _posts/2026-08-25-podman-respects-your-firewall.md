@@ -200,7 +200,7 @@ your `StrictForwardPorts` setting rather than assuming this post covers you.
 
 **The comment was right and worth acting on, and the reason it gave was wrong.** If I'd repeated it without checking, I'd have published "rootless protects you because it can't write rules" — true as far as it goes, and it would have left people thinking rootful Podman is as dangerous as Docker. It isn't.
 
-That distinction is practical. Plenty of people run rootful Podman because they need low ports, or systemd integration, or just inherited it that way. They get the firewall behaviour too.
+That distinction is practical. Plenty of people run rootful Podman because they need low ports, or systemd integration, or just inherited it that way. They get the firewall behaviour too. They also, usually, get Podman through a Docker-shaped client, and that compatibility layer has its own places where the same request means something different — [an update that only changes a memory limit resets the container's restart policy to `no` on Podman and leaves it alone on Docker](https://homelabpostmortem.com/2026/09/18/podman-compat-api-update-resets-the-restart-policy-to-no/).
 
 The narrower lesson is about **what "publishes a port" means**. Docker, rootless Podman and rootful Podman all print `0.0.0.0:8080->80/tcp`. Three different security outcomes behind one identical string. The output tells you the intent, not the result — same as `ufw status` telling you its rules rather than your exposure.
 

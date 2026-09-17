@@ -69,6 +69,11 @@ destructive, dry-run modes where it matters.
   returning everything on disk, or stopping at a NUL byte with exit 0 and
   hiding the rest. From
   [docker logs stops at a NUL byte and exits 0]({{ '/2026/09/12/docker-logs-stops-at-a-nul-byte-and-exits-0/' | relative_url }}).
+- **`check-podman-compat-update-restart.sh`** — lists the running Podman
+  containers that have no restart policy and probes whether this Podman's
+  Docker-compatible `update` endpoint resets the policy to `no` when the body
+  omits it — it does on 5.4.2, even for `{}`, while Docker keeps it. From
+  [Podman's compat API resets the restart policy on any update that omits it]({{ '/2026/09/18/podman-compat-api-update-resets-the-restart-policy-to-no/' | relative_url }}).
 - **`check-llama-response-format.sh`** — tells you which `response_format`
   forms a running `llama-server` actually enforces. The one its README shows
   is accepted and ignored. From
