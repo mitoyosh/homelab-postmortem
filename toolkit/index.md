@@ -49,6 +49,10 @@ destructive, dry-run modes where it matters.
   that will never be read, before you flash the card and find out the
   headless way. From
   [cloud-init calls your user-data valid]({{ '/2026/08/29/cloud-init-validates-the-key-it-never-reads/' | relative_url }}).
+- **`check-llama-cache-ram.sh`** — tells you whether a running `llama-server`
+  uses `--cache-ram -1`, documented as "no limit": it keeps less than the
+  default on dense models and has no memory bound on hybrid ones. From
+  [llama-server's `--cache-ram -1` is not "no limit"]({{ '/2026/09/24/llama-server-cache-ram-minus-one-is-not-no-limit/' | relative_url }}).
 - **`check-embd-determinism.sh`** — tells you whether decoding through
   `llama_batch.embd` gives the same logits every time on your build and model,
   and when it does not, confirms whether the cause is the known heap over-read:

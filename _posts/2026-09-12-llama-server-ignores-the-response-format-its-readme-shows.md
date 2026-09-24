@@ -135,3 +135,5 @@ The wider one is about what "it worked" is evidence of. A structured response fr
 Two days later the same shape showed up one layer over: [Ollama's Responses API accepts `previous_response_id`, returns 200 and "completed", and starts every turn from nothing](https://homelabpostmortem.com/2026/09/14/ollama-responses-api-drops-previous-response-id/). There the number that has to move is the input token count, and it does not.
 
 And three days after that, the layer below: [llama.cpp's batch API says pass `pos` as NULL and positions are tracked automatically; for M-RoPE embeddings it reads past its own buffer](https://homelabpostmortem.com/2026/09/15/llama-cpp-batch-reads-past-its-own-pos-buffer-for-mrope/). No number to watch that time — a sanitiser, and an address.
+
+The same server's `--cache-ram -1` is another documented value that does something other than its label: ["no limit" removes the byte limit and leaves the token limit at `n_ctx`](https://homelabpostmortem.com/2026/09/24/llama-server-cache-ram-minus-one-is-not-no-limit/). The number to watch there is `cache_n` on a re-sent prompt.
