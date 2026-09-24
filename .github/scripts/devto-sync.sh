@@ -52,7 +52,12 @@ BODY=$(awk 'BEGIN{c=0} /^---[[:space:]]*$/{c++; next} c>=2{print}' "$FILE")
 # `set -euo pipefail`, so a grep that matches nothing fails the pipeline and
 # kills the script THERE — before the check below can say which field was
 # missing. The guard exists; without `|| true` it never gets to speak.
-TITLE=$(echo "$FRONT_MATTER" | grep '^title:' | sed -E 's/^title:[[:space:]]*"?([^"]*)"?[[:space:]]*$/\1/' || true)
+# YAML scalar value of a front-matter key: strip the key, surrounding double
+# quotes, and unescape \" inside. 2026-09-24: the old regex stopped at the first
+# `"`, so a title containing \"no limit\" matched nothing and the whole line —
+# `devto_title: "…"` — went to dev.to as the title.
+fm_value() { grep -m1 "^$1:" | sed -E "s/^$1:[[:space:]]*//; s/[[:space:]]*\$//" | sed -E 's/^"(.*)"$/\1/; s/\\"/"/g'; }
+TITLE=$(echo "$FRONT_MATTER" | fm_value title || true)
 if [ -z "$TITLE" ]; then
   echo "Could not extract a title from $FILE front matter; skipping" >&2
   exit 1
@@ -69,10 +74,14 @@ fi
 # because only newly added posts were ever passed in. Widening that to AM on
 # 2026-09-09 so corrections would propagate is what surfaced it: the first
 # edit to an older post exited 1 with no output at all.
-DEVTO_TITLE=$(echo "$FRONT_MATTER" | grep '^devto_title:' | sed -E 's/^devto_title:[[:space:]]*"?([^"]*)"?[[:space:]]*$/\1/' || true)
+DEVTO_TITLE=$(echo "$FRONT_MATTER" | fm_value devto_title || true)
 if [ -n "$DEVTO_TITLE" ]; then
   TITLE="$DEVTO_TITLE"
 fi
+
+case "$TITLE" in
+  title:*|devto_title:*) echo "Title parse failed for $FILE: '$TITLE'" >&2; exit 1 ;;
+esac
 
 # Check it here rather than letting the API say so, and refuse rather than
 # truncating: a title cut at 128 bytes mid-clause is worse than a clear failure.
