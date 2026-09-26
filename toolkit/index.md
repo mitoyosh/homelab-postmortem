@@ -53,6 +53,11 @@ destructive, dry-run modes where it matters.
   uses `--cache-ram -1`, documented as "no limit": it keeps less than the
   default on dense models and has no memory bound on hybrid ones. From
   [llama-server's `--cache-ram -1` is not "no limit"]({{ '/2026/09/24/llama-server-cache-ram-minus-one-is-not-no-limit/' | relative_url }}).
+- **`check-decision-temperatures.sh`** — lists calibration temperatures in Laya
+  checkpoints and edgejev builds that make a decision model's confidence
+  meaningless — the English checkpoint's 0.1 for 11+-option questions, which
+  laya clamps at load time but ports inherit from the file. From
+  [The Laya checkpoint still ships a 0.1 temperature]({{ '/2026/09/26/laya-onnx-port-skips-the-temperature-clamp/' | relative_url }}).
 - **`check-embd-determinism.sh`** — tells you whether decoding through
   `llama_batch.embd` gives the same logits every time on your build and model,
   and when it does not, confirms whether the cause is the known heap over-read:
