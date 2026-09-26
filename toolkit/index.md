@@ -83,6 +83,11 @@ destructive, dry-run modes where it matters.
   Docker-compatible `update` endpoint resets the policy to `no` when the body
   omits it — it does on 5.4.2, even for `{}`, while Docker keeps it. From
   [Podman's compat API resets the restart policy on any update that omits it]({{ '/2026/09/18/podman-compat-api-update-resets-the-restart-policy-to-no/' | relative_url }}).
+- **`check-podman-subpath-cp.sh`** — lists the Podman containers for which a
+  `podman cp` while stopped will read and write the volume root instead of the
+  `subpath=` they mount — a different file out, another container's file
+  overwritten in. From
+  [podman cp on a stopped container ignores the volume's subpath]({{ '/2026/09/26/podman-cp-ignores-volume-subpath-when-the-container-is-stopped/' | relative_url }}).
 - **`check-llama-response-format.sh`** — tells you which `response_format`
   forms a running `llama-server` actually enforces. The one its README shows
   is accepted and ignored. From
