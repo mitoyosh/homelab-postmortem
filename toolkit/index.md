@@ -58,6 +58,12 @@ destructive, dry-run modes where it matters.
   meaningless — the English checkpoint's 0.1 for 11+-option questions, which
   laya clamps at load time but ports inherit from the file. From
   [The Laya checkpoint still ships a 0.1 temperature]({{ '/2026/09/26/laya-onnx-port-skips-the-temperature-clamp/' | relative_url }}).
+- **`check-ollama-gpu-overhead.sh`** — checks whether the VRAM you reserved
+  with `OLLAMA_GPU_OVERHEAD` is actually left free. Ollama 0.34.x prints the
+  reservation in its log, but the llama-server runner that places the layers
+  never receives it; the script measures free VRAM with a model loaded and
+  prints the `LLAMA_ARG_FIT_TARGET` to set instead. From
+  [Ollama 0.34 logs your OLLAMA_GPU_OVERHEAD reservation as applied]({{ '/2026/09/28/ollama-gpu-overhead-is-logged-but-never-reaches-llama-server/' | relative_url }}).
 - **`check-embd-determinism.sh`** — tells you whether decoding through
   `llama_batch.embd` gives the same logits every time on your build and model,
   and when it does not, confirms whether the cause is the known heap over-read:
