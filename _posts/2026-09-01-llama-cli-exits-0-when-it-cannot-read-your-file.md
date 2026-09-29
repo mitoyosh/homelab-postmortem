@@ -174,3 +174,8 @@ whatever repository you unpacked the source
 inside](https://homelabpostmortem.com/2026/09/05/llama-cpp-stamps-a-foreign-repos-commit/).
 Confidently, with no warning, and with the one guard that could have caught it
 structurally unable to fire.
+
+And at generation time, in the field an API client trusts most: on PLaMo models,
+[`finish_reason: "stop"` arrives in the middle of a sentence, at the first
+`</s>`](https://homelabpostmortem.com/2026/09/29/llama-cpp-stops-plamo-at-the-first-closing-s-tag/),
+because llama.cpp chose its end tokens partly by their spelling.
