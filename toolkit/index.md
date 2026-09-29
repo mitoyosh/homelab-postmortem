@@ -64,6 +64,11 @@ destructive, dry-run modes where it matters.
   never receives it; the script measures free VRAM with a model loaded and
   prints the `LLAMA_ARG_FIT_TARGET` to set instead. From
   [Ollama 0.34 logs your OLLAMA_GPU_OVERHEAD reservation as applied]({{ '/2026/09/28/ollama-gpu-overhead-is-logged-but-never-reaches-llama-server/' | relative_url }}).
+- **`check-ollama-v1-sampling.sh`** — lists the Ollama models whose
+  `temperature`, `top_p` or penalties the OpenAI-compatible API replaces when a
+  client leaves them out, while `ollama show` keeps printing the model's
+  values; `--probe` measures it on your server. From
+  [Ollama's OpenAI-compatible API replaces your model's temperature and top_p with 1.0]({{ '/2026/09/29/ollama-openai-api-replaces-your-model-temperature-with-1/' | relative_url }}).
 - **`check-embd-determinism.sh`** — tells you whether decoding through
   `llama_batch.embd` gives the same logits every time on your build and model,
   and when it does not, confirms whether the cause is the known heap over-read:
