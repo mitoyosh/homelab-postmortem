@@ -105,6 +105,11 @@ destructive, dry-run modes where it matters.
   `subpath=` they mount — a different file out, another container's file
   overwritten in. From
   [podman cp on a stopped container ignores the volume's subpath]({{ '/2026/09/26/podman-cp-ignores-volume-subpath-when-the-container-is-stopped/' | relative_url }}).
+- **`check-podman-export-idmap.sh`** — lists the Podman containers with their
+  own user-namespace mapping, such as rootless `--userns=keep-id` ones, whose
+  `podman export` and `podman cp` archives carry every file owner shifted, and
+  checks an export without writing it. From
+  [Rootless podman export of a keep-id container shifts every file owner]({{ '/2026/09/30/podman-export-of-a-keep-id-container-shifts-every-owner/' | relative_url }}).
 - **`check-llama-response-format.sh`** — tells you which `response_format`
   forms a running `llama-server` actually enforces. The one its README shows
   is accepted and ignored. From

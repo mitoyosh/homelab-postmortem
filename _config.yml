@@ -28,7 +28,7 @@ packs:
     title: "Backup &amp; restore integrity"
     price: "$5"
     question: "Is your backup actually a backup, and will the clone boot?"
-    detail: "Three checks. Where your network config really persists before you archive it, the stale PARTUUID that stops a successful-looking clone from booting, and the podman cp that copies a different file out of a stopped container."
+    detail: "Four checks. Where your network config really persists before you archive it, the stale PARTUUID that stops a successful-looking clone from booting, the podman cp that copies a different file out of a stopped container, and the podman export that writes every owner in the archive shifted."
     buy_url: "https://buy.stripe.com/eVq6oGgrWep68O75qE5Vu03"
   - id: persistence
     title: "Persistence across reboot"
