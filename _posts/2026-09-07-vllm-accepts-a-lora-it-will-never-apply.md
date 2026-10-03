@@ -135,3 +135,7 @@ The same "accepted, then not applied" shape turned up in llama.cpp a few days la
 generates as if no `response_format` was sent](https://homelabpostmortem.com/2026/09/12/llama-server-ignores-the-response-format-its-readme-shows/).
 There the control is even simpler — remove the constraint and see whether the bytes change —
 and it is the only way to tell a server that enforced from a model that cooperated.
+
+And in vLLM itself again, a month later: an adapter that sets `rank_pattern` or `alpha_pattern`
+[is accepted and served with one scale for every module](https://homelabpostmortem.com/2026/10/03/vllm-ignores-lora-rank-pattern-and-alpha-pattern/),
+so the patterned modules come out stronger or weaker than PEFT trained them, with no warning.

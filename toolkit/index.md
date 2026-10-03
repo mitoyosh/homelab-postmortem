@@ -84,6 +84,10 @@ destructive, dry-run modes where it matters.
   alphabetical order to each Ollama model and reports whether the output kept
   the declared order; on Ollama's native chat path it doesn't. From
   [On one of Ollama's two chat paths, your JSON schema's keys are re-sorted]({{ '/2026/10/03/ollama-native-chat-path-sorts-your-json-schema-keys/' | relative_url }}).
+- **`check-lora-patterns.py`** — reads LoRA `adapter_config.json` files and
+  lists the modules whose `rank_pattern` / `alpha_pattern` give them a scale
+  vLLM won't apply, with the factor to fold into `lora_B`. From
+  [vLLM serves a LoRA adapter that uses rank_pattern or alpha_pattern at the wrong scale]({{ '/2026/10/03/vllm-ignores-lora-rank-pattern-and-alpha-pattern/' | relative_url }}).
 - **`check-embd-determinism.sh`** — tells you whether decoding through
   `llama_batch.embd` gives the same logits every time on your build and model,
   and when it does not, confirms whether the cause is the known heap over-read:
