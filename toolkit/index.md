@@ -75,6 +75,11 @@ destructive, dry-run modes where it matters.
   and PLaMo-3 that is the closing strikethrough tag, and output stops at it with
   `finish_reason: "stop"`. From
   [llama.cpp picks stop tokens partly by their spelling]({{ '/2026/09/29/llama-cpp-stops-plamo-at-the-first-closing-s-tag/' | relative_url }}).
+- **`check-llama-sleep-race.sh`** — finds `llama-server` processes and router
+  presets with `--sleep-idle-seconds` on, where a request that arrives just
+  before the server sleeps is left in the queue or crashes it, and says whether
+  systemd would restart it. From
+  [llama-server's sleep mode loses, or crashes on, a request that arrives just before it sleeps]({{ '/2026/10/03/llama-server-sleep-mode-loses-or-crashes-on-a-request-at-bedtime/' | relative_url }}).
 - **`check-embd-determinism.sh`** — tells you whether decoding through
   `llama_batch.embd` gives the same logits every time on your build and model,
   and when it does not, confirms whether the cause is the known heap over-read:
