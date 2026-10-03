@@ -80,6 +80,10 @@ destructive, dry-run modes where it matters.
   before the server sleeps is left in the queue or crashes it, and says whether
   systemd would restart it. From
   [llama-server's sleep mode loses, or crashes on, a request that arrives just before it sleeps]({{ '/2026/10/03/llama-server-sleep-mode-loses-or-crashes-on-a-request-at-bedtime/' | relative_url }}).
+- **`check-ollama-schema-order.sh`** — sends a two-key JSON schema in reverse
+  alphabetical order to each Ollama model and reports whether the output kept
+  the declared order; on Ollama's native chat path it doesn't. From
+  [On one of Ollama's two chat paths, your JSON schema's keys are re-sorted]({{ '/2026/10/03/ollama-native-chat-path-sorts-your-json-schema-keys/' | relative_url }}).
 - **`check-embd-determinism.sh`** — tells you whether decoding through
   `llama_batch.embd` gives the same logits every time on your build and model,
   and when it does not, confirms whether the cause is the known heap over-read:
