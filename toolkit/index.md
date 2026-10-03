@@ -104,6 +104,11 @@ destructive, dry-run modes where it matters.
   returning everything on disk, or stopping at a NUL byte with exit 0 and
   hiding the rest. From
   [docker logs stops at a NUL byte and exits 0]({{ '/2026/09/12/docker-logs-stops-at-a-nul-byte-and-exits-0/' | relative_url }}).
+- **`check-overlay-sandbox.sh`** — on a Docker swarm node, finds containers
+  that are running but have lost their overlay network: failed container starts
+  can take the node's join count to zero, and a service retrying on a taken host
+  port did it in 20 seconds. Full toolkit only. From
+  [A Docker swarm service failing on a taken host port cut every container off its overlay network]({{ '/2026/10/03/docker-swarm-failed-starts-cut-healthy-containers-off-the-overlay/' | relative_url }}).
 - **`check-podman-compat-update-restart.sh`** — lists the running Podman
   containers that have no restart policy and probes whether this Podman's
   Docker-compatible `update` endpoint resets the policy to `no` when the body
