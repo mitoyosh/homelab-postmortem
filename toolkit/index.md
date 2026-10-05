@@ -84,6 +84,10 @@ destructive, dry-run modes where it matters.
   alphabetical order to each Ollama model and reports whether the output kept
   the declared order; on Ollama's native chat path it doesn't. From
   [On one of Ollama's two chat paths, your JSON schema's keys are re-sorted]({{ '/2026/10/03/ollama-native-chat-path-sorts-your-json-schema-keys/' | relative_url }}).
+- **`check-ollama-format-think.sh`** — sends short prompts to a thinking model
+  with `think: true` and a JSON schema, and reports how many replies skipped
+  thinking and came back outside the schema. From
+  [With think enabled, Ollama only enforces your JSON schema after the model has thought]({{ '/2026/10/05/ollama-thinking-model-skips-your-json-schema-when-it-answers-directly/' | relative_url }}).
 - **`check-lora-patterns.py`** — reads LoRA `adapter_config.json` files and
   lists the modules whose `rank_pattern` / `alpha_pattern` give them a scale
   vLLM won't apply, with the factor to fold into `lora_B`. From

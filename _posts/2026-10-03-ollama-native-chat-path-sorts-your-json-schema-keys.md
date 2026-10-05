@@ -108,4 +108,6 @@ When a layer sits between your client and the engine, check whether it passes yo
 
 This is the second time in a week that Ollama's translation into llama-server rewrote part of a request without saying so. The [OpenAI-compatible API fills in temperature and top_p as 1.0](https://homelabpostmortem.com/2026/09/29/ollama-openai-api-replaces-your-model-temperature-with-1/) when the client leaves them out. Both times the reply was valid and well formed.
 
+A third turned up two days later: with `think` enabled, [a model that answers without thinking isn't held to the schema at all](https://homelabpostmortem.com/2026/10/05/ollama-thinking-model-skips-your-json-schema-when-it-answers-directly/).
+
 The toolkit's `check-ollama-schema-order.sh` sends that two-key schema to each installed model, or the ones you name, and reports which kept the order. It also reads `OLLAMA_GO_TEMPLATE` from the running server's environment.
