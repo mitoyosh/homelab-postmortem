@@ -88,6 +88,11 @@ destructive, dry-run modes where it matters.
   with `think: true` and a JSON schema, and reports how many replies skipped
   thinking and came back outside the schema. From
   [With think enabled, Ollama only enforces your JSON schema after the model has thought]({{ '/2026/10/05/ollama-thinking-model-skips-your-json-schema-when-it-answers-directly/' | relative_url }}).
+- **`check-spec-logprobs.sh`** — reads `/slots` and sends one logprob request
+  to a llama-server, and reports whether the tokens after the first came back
+  with real alternatives or as speculative-decoding placeholders (logprob 0, no
+  alternatives). From
+  [With speculative decoding on, llama-server's logprobs are placeholders]({{ '/2026/10/06/llama-server-speculative-decoding-returns-placeholder-logprobs/' | relative_url }}).
 - **`check-lora-patterns.py`** — reads LoRA `adapter_config.json` files and
   lists the modules whose `rank_pattern` / `alpha_pattern` give them a scale
   vLLM won't apply, with the factor to fold into `lora_B`. From
