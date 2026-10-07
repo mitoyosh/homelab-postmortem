@@ -93,6 +93,10 @@ destructive, dry-run modes where it matters.
   with real alternatives or as speculative-decoding placeholders (logprob 0, no
   alternatives). From
   [With speculative decoding on, llama-server's logprobs are placeholders]({{ '/2026/10/06/llama-server-speculative-decoding-returns-placeholder-logprobs/' | relative_url }}).
+- **`check-gemma4-renderer.sh`** — applies Ollama's Gemma 4 template rules to
+  each installed model and lists which ones of 10B or more resolve to the
+  e2b/e4b template because their name has no size in it. Loads nothing. From
+  [Ollama picks the Gemma 4 prompt template from the model's name]({{ '/2026/10/07/ollama-picks-the-gemma-4-template-from-the-model-name/' | relative_url }}).
 - **`check-lora-patterns.py`** — reads LoRA `adapter_config.json` files and
   lists the modules whose `rank_pattern` / `alpha_pattern` give them a scale
   vLLM won't apply, with the factor to fold into `lora_B`. From
