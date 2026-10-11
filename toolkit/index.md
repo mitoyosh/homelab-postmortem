@@ -135,6 +135,10 @@ destructive, dry-run modes where it matters.
   Docker-compatible `update` endpoint resets the policy to `no` when the body
   omits it — it does on 5.4.2, even for `{}`, while Docker keeps it. From
   [Podman's compat API resets the restart policy on any update that omits it]({{ '/2026/09/18/podman-compat-api-update-resets-the-restart-policy-to-no/' | relative_url }}).
+- **`check-podman-restart-userns.sh`** — lists Podman containers with a restart
+  policy that are stopped when they should have been restarted, and running ones
+  that will be (rootful, own ID mapping, AppArmor profile, AppArmor host). From
+  [On an AppArmor host, rootful Podman restarts a --uidmap container once]({{ '/2026/10/11/rootful-podman-restarts-a-uidmap-container-once-on-an-apparmor-host/' | relative_url }}).
 - **`check-podman-subpath-cp.sh`** — lists the Podman containers for which a
   `podman cp` while stopped will read and write the volume root instead of the
   `subpath=` they mount — a different file out, another container's file
