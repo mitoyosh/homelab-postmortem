@@ -169,6 +169,26 @@ destructive, dry-run modes where it matters.
   reachable from your network while your firewall reports them as denied.
   Docker's chains are evaluated before UFW's, so both are true at once. From
   [UFW says the port is closed]({{ '/2026/08/22/docker-publishes-past-ufw/' | relative_url }}).
+- **`fix-cloudinit-placement.py`** — moves a cloud-init `ssh_import_id` to the
+  place cloud-init actually reads it from (top level for the default user,
+  nested for ordinary ones), and refuses rather than guesses on any user-data
+  it does not fully understand. Used by the provisioning pack's `run.sh`. From
+  [cloud-init validates the SSH key it never reads]({{ '/2026/08/29/cloud-init-validates-the-key-it-never-reads/' | relative_url }}).
+- **`check-llama-build-provenance.sh`** — answers whether a llama.cpp or ggml
+  build will stamp a commit hash from somebody else's repository, which a
+  release tarball unpacked inside an unrelated git work tree does without a
+  warning. From
+  [llama-cli reports a commit hash that is not in llama.cpp]({{ '/2026/09/05/llama-cpp-stamps-a-foreign-repos-commit/' | relative_url }}).
+- **`check-ollama-quant-artifact.sh`** — asks an Ollama model three trivial
+  coding questions and runs what comes back, to catch a quantisation artifact
+  that pulls, verifies and streams fluent text with no working code in it.
+  Never pulls. From
+  [An Ollama library tag that pulls, runs, and has no working code in it]({{ '/2026/09/07/ollama-library-quant-is-broken-not-the-quant-level/' | relative_url }}).
+- **`check-lora-target-overlap.sh`** — answers whether a LoRA adapter will be
+  applied to anything under the `--lora-target-modules` you serve with; vLLM
+  loads an adapter that matches none of them and answers from the base model.
+  From
+  [vLLM accepts a LoRA adapter it will never apply]({{ '/2026/09/07/vllm-accepts-a-lora-it-will-never-apply/' | relative_url }}).
 
 Also relevant if you're building your own delivery pipeline:
 [Stripe retries a failed webhook for three days]({{ '/2026/08/18/stripe-webhook-retries-and-idempotency/' | relative_url }}) — the idempotency bug this toolkit's own delivery Worker hit and fixed.
@@ -196,7 +216,7 @@ Every script in every pack is also in the complete toolkit below, so there is no
 reason to buy both.
 
 {% endif %}{% assign pack_total = live_packs.size | times: 5 %}<div class="callout">
-  <h3>Get everything &mdash; $15</h3>
+  <h3>Get everything &mdash; {{ site.toolkit_price }}</h3>
   <p>
     Every script in the toolkit, including the ones that are not in any pack.
     {% if live_packs.size > 3 %}Buying the {{ live_packs.size }} packs separately is
@@ -204,5 +224,5 @@ reason to buy both.
     them.{% endif %} One-time purchase: the download link is emailed to you
     immediately, and every script added later is part of the same purchase.
   </p>
-  <a class="btn" href="https://buy.stripe.com/14A28qgrW6WE0hB6uI5Vu06">Buy the toolkit &rarr;</a>
+  <a class="btn" href="{{ site.toolkit_buy_url }}">Buy the toolkit &rarr;</a>
 </div>

@@ -10,6 +10,10 @@ url: "https://homelabpostmortem.com"
 tip_url: ""
 tip_label: "Buy me a coffee"
 
+# The complete toolkit. Used by the toolkit page and by the per-post callout.
+toolkit_price: "$15"
+toolkit_buy_url: "https://buy.stripe.com/14A28qgrW6WE0hB6uI5Vu06"
+
 # Toolkit packs. A pack with an empty buy_url is not rendered, so they can be
 # published one at a time as each is ready.
 #
