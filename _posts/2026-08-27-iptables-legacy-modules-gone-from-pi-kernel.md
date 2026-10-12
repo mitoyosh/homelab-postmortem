@@ -183,4 +183,6 @@ The trap here is a config symbol that kept its name while changing what it produ
 
 So the habit: **when a config says a thing exists and the thing does not exist, suspect the symbol before you suspect the build.** A missing artifact with a present config is much more often a renamed or re-scoped option than a broken toolchain — the toolchain failing loudly is the common case, and this failed quietly.
 
+The same kernel line later broke IR transmission the same quiet way: [`pwm-ir-tx` on 6.18 sends every edge of a code within microseconds](https://homelabpostmortem.com/2026/10/12/pi-pwm-ir-tx-sends-nothing-on-6-18-and-ir-ctl-says-it-did/) while `ir-ctl` reports success.
+
 The wider one is about reading closed issues. `closed as completed` on an upstream tracker is a strong signal and it is genuinely useful — it correctly killed an investigation for me two days earlier, on this same tracker, where a `bcmgenet` regression really had been fixed and shipped to apt while the reports about it were still circulating. Here the same state on the same tracker meant "answered, working as intended." **The state field tells you the thread is over. It does not tell you which way it ended.** That is in the comments, usually the last few, and there is no way to skip reading them.

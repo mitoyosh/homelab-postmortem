@@ -169,6 +169,10 @@ destructive, dry-run modes where it matters.
   reachable from your network while your firewall reports them as denied.
   Docker's chains are evaluated before UFW's, so both are true at once. From
   [UFW says the port is closed]({{ '/2026/08/22/docker-publishes-past-ufw/' | relative_url }}).
+- **`check-ir-tx.sh`** — lists IR transmitters and flags `pwm-ir-tx` on a
+  6.18+ kernel, which sends every edge of a code within microseconds while
+  `ir-ctl` reports success; `--probe` measures it from the kernel trace. From
+  [On the Pi's 6.18 kernel, pwm-ir-tx sends every edge of an IR code within microseconds]({{ '/2026/10/12/pi-pwm-ir-tx-sends-nothing-on-6-18-and-ir-ctl-says-it-did/' | relative_url }}).
 - **`fix-cloudinit-placement.py`** — moves a cloud-init `ssh_import_id` to the
   place cloud-init actually reads it from (top level for the default user,
   nested for ordinary ones), and refuses rather than guesses on any user-data

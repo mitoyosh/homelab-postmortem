@@ -116,3 +116,6 @@
 "/2026/10/11/rootful-podman-restarts-a-uidmap-container-once-on-an-apparmor-host/":
   - script: "check-podman-restart-userns.sh"
     pack: "persistence"
+"/2026/10/12/pi-pwm-ir-tx-sends-nothing-on-6-18-and-ir-ctl-says-it-did/":
+  - script: "check-ir-tx.sh"
+    pack: ""
