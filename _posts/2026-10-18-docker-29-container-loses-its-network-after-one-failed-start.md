@@ -80,6 +80,8 @@ If the endpoint join fails, which is where the port binding is programmed, the n
 
 ## The fix
 
+A fix has been proposed upstream, [moby#53961](https://github.com/moby/moby/pull/53961) ("preserve network config after failed start"), open and not yet reviewed as of 20 October. It was not tested here.
+
 For a container already in this state, reconnect it and restart it:
 
 ```
