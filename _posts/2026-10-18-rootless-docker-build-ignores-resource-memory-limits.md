@@ -86,3 +86,5 @@ Test a limit by breaking it. "The flag was accepted" and "the build passed" say 
 And when one path enforces a limit, don't assume the neighbouring path does. `docker run` and `docker build` on the same daemon took the same `256m` and did different things with it.
 
 This is the same shape as [a Pi that accepted every Docker memory limit and enforced none](https://homelabpostmortem.com/2026/08/19/pi-memory-cgroup-disabled-by-firmware/). There it was the memory controller that was missing, so `docker run` lied as well. Here the controller works and one code path throws the request away.
+
+Rootless Docker differs from rootful in one more way since 29.6: [`docker exec` there creates world-writable files](https://homelabpostmortem.com/2026/10/20/docker-exec-creates-world-writable-files-in-dind-and-rootless-since-29-6/), because dockerd's umask reaches the exec'd process through containerd.

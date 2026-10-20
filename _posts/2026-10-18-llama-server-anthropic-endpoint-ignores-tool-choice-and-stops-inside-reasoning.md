@@ -94,3 +94,5 @@ exit 1. With a model that doesn't call tools or doesn't reason (gemma-3-1b here)
 A compatibility layer is a translation, and translations lose things silently. When a server says it speaks another vendor's API, test the parameters you actually depend on, and design the test so the right answer is different from the default: force the tool the model wouldn't pick on its own, and choose a stop string the model will write where you don't want it to stop. A test where the correct behaviour and the broken one give the same output proves nothing.
 
 The same pattern of a control being accepted and then quietly overridden by the model's reasoning came up with Ollama: [a thinking model skipped the JSON schema when it answered directly](https://homelabpostmortem.com/2026/10/05/ollama-thinking-model-skips-your-json-schema-when-it-answers-directly/).
+
+The OpenAI-compatible Responses endpoint on the same server has a related gap: [a reply cut off by `max_output_tokens` is reported as completed](https://homelabpostmortem.com/2026/10/20/llama-server-responses-api-reports-a-cut-off-reply-as-completed/), tool calls with half their arguments included.

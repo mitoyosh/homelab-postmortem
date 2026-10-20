@@ -109,6 +109,11 @@ destructive, dry-run modes where it matters.
   llama-server's Anthropic-compatible `/v1/messages` and reports whether a forced
   `tool_choice`, `tool_choice: none` and `stop_sequences` are honoured. From
   [llama-server's Anthropic endpoint ignores which tool you ask for]({{ '/2026/10/18/llama-server-anthropic-endpoint-ignores-tool-choice-and-stops-inside-reasoning/' | relative_url }}).
+- **`check-llama-responses-status.sh`** — sends an 8-token request to
+  llama-server's `/v1/responses` and one to `/v1/chat/completions`, and reports
+  whether a reply cut off by the limit is marked `incomplete` or, wrongly,
+  `completed`. From
+  [llama-server's Responses API reports a cut-off reply as completed]({{ '/2026/10/20/llama-server-responses-api-reports-a-cut-off-reply-as-completed/' | relative_url }}).
 - **`check-lora-patterns.py`** — reads LoRA `adapter_config.json` files and
   lists the modules whose `rank_pattern` / `alpha_pattern` give them a scale
   vLLM won't apply, with the factor to fold into `lora_B`. From
@@ -160,6 +165,15 @@ destructive, dry-run modes where it matters.
   warning, and with `--probe` measures it with a one-step build. Full toolkit
   only. From
   [Rootless Docker builds ignore --resource memory limits]({{ '/2026/10/18/rootless-docker-build-ignores-resource-memory-limits/' | relative_url }}).
+- **`check-docker-exec-umask.sh`** — reads the shim umask behind every running
+  container and says whether `docker exec` there creates world-writable files,
+  as it does since Docker 29.6 wherever dockerd starts containerd itself (dind,
+  rootless). Full toolkit only. From
+  [Since Docker 29.6, docker exec creates world-writable files in docker-in-docker and rootless Docker]({{ '/2026/10/20/docker-exec-creates-world-writable-files-in-dind-and-rootless-since-29-6/' | relative_url }}).
+- **`check-dockerfile-chown.sh`** — resolves every `COPY`/`ADD --chown` in a
+  Dockerfile against the stage's base image and flags the ones that will build
+  fine and quietly leave the files owned by root. Full toolkit only. From
+  [COPY --chown with a user that doesn't exist builds fine and gives the files to root]({{ '/2026/10/20/copy-chown-with-a-missing-user-builds-fine-and-leaves-root-ownership/' | relative_url }}).
 - **`check-podman-subpath-cp.sh`** — lists the Podman containers for which a
   `podman cp` while stopped will read and write the volume root instead of the
   `subpath=` they mount — a different file out, another container's file

@@ -137,3 +137,12 @@
 "/2026/10/18/swarm-containers-cannot-reach-their-own-node-under-ufw-since-docker-29-8/":
   - script: "check-swarm-ufw-ingress.sh"
     pack: "exposure-firewall"
+"/2026/10/20/copy-chown-with-a-missing-user-builds-fine-and-leaves-root-ownership/":
+  - script: "check-dockerfile-chown.sh"
+    pack: ""
+"/2026/10/20/docker-exec-creates-world-writable-files-in-dind-and-rootless-since-29-6/":
+  - script: "check-docker-exec-umask.sh"
+    pack: ""
+"/2026/10/20/llama-server-responses-api-reports-a-cut-off-reply-as-completed/":
+  - script: "check-llama-responses-status.sh"
+    pack: "local-llm"
