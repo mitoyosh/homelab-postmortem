@@ -68,7 +68,7 @@ There's no `else`. A name that isn't found leaves `0:0` and returns no error. Gr
 
 The numeric case is a parsing limit. In BuildKit's LLB client, `parseUID` parses a `--chown` value with `strconv.ParseInt(str, 10, 32)`, a 32-bit signed parse, so `2147483648` and above don't parse as numbers, are treated as names, aren't found, and end up as root.
 
-`--link` refuses names outright, and its error says why: they "can't be resolved when used with --link". The `scratch` failure comes from a different place in the build, not from this lookup. A fix for the silent fallback is proposed in [buildkit#7295](https://github.com/moby/buildkit/pull/7295), open and unreviewed as of 20 October.
+`--link` refuses names outright, and its error says why: they "can't be resolved when used with --link". The `scratch` failure comes from a different place in the build, not from this lookup. A fix for the silent fallback was proposed in [buildkit#7295](https://github.com/moby/buildkit/pull/7295), but it was closed without being merged on 20 October, and no other fix is open.
 
 ## The fix
 
