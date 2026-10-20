@@ -112,3 +112,5 @@ It is the second structured-output gap in Ollama 0.35 here in a week. On one of 
 Which template a Gemma 4 model gets in the first place depends on [what the model is called](https://homelabpostmortem.com/2026/10/07/ollama-picks-the-gemma-4-template-from-the-model-name/): a copy of `gemma4:12b` under a name without `12b` is prompted with the e2b/e4b template.
 
 The toolkit's `check-ollama-format-think.sh` sends a few short prompts to a model with `think: true` and a schema, and reports how many replies skipped thinking and how many of those broke the schema.
+
+llama-server has its own version of reasoning getting in the way of a request control: on its Anthropic endpoint, [stop sequences are matched inside the model's thinking](https://homelabpostmortem.com/2026/10/18/llama-server-anthropic-endpoint-ignores-tool-choice-and-stops-inside-reasoning/) and the answer never arrives.

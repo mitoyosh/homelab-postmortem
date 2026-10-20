@@ -119,3 +119,21 @@
 "/2026/10/12/pi-pwm-ir-tx-sends-nothing-on-6-18-and-ir-ctl-says-it-did/":
   - script: "check-ir-tx.sh"
     pack: ""
+"/2026/10/18/docker-29-container-loses-its-network-after-one-failed-start/":
+  - script: "check-docker-lost-network.sh"
+    pack: "persistence"
+"/2026/10/18/docker-image-mount-comes-back-empty-after-a-reboot/":
+  - script: "check-docker-image-mounts.sh"
+    pack: "persistence"
+"/2026/10/18/llama-server-anthropic-endpoint-ignores-tool-choice-and-stops-inside-reasoning/":
+  - script: "check-llama-anthropic-controls.sh"
+    pack: "local-llm"
+"/2026/10/18/llama-server-leaves-a-keep-alive-connection-unread-until-another-closes/":
+  - script: "check-llama-http-stall.sh"
+    pack: "local-llm"
+"/2026/10/18/rootless-docker-build-ignores-resource-memory-limits/":
+  - script: "check-rootless-build-limits.sh"
+    pack: ""
+"/2026/10/18/swarm-containers-cannot-reach-their-own-node-under-ufw-since-docker-29-8/":
+  - script: "check-swarm-ufw-ingress.sh"
+    pack: "exposure-firewall"

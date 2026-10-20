@@ -26,7 +26,7 @@ packs:
     title: "Exposure &amp; firewall"
     price: "$5"
     question: "Is anything reachable from your network that your firewall says is blocked?"
-    detail: "Two checks. Container ports that answer from the LAN while ufw reports them denied, and whether the iptables your tools call has any kernel support left."
+    detail: "Three checks. Container ports that answer from the LAN while ufw reports them denied, whether the iptables your tools call has any kernel support left, and Swarm ports that containers on the same node can no longer reach because ufw now drops them."
     buy_url: "https://buy.stripe.com/dRmaEWdfK2GoggzdXa5Vu02"
   - id: backup-restore
     title: "Backup &amp; restore integrity"
@@ -38,7 +38,7 @@ packs:
     title: "Persistence across reboot"
     price: "$5"
     question: "Will the settings you just applied still be there after a reboot?"
-    detail: "Six checks. sysctl, the journal, swap, Docker container logs after a power loss, whether your Podman containers still have the restart policy you gave them, and whether Podman actually restarts them — each a case where the command succeeds, the value reads back, and the next boot disagrees."
+    detail: "Eight checks. sysctl, the journal, swap, Docker container logs after a power loss, whether your Podman containers still have the restart policy you gave them, whether Podman actually restarts them, Docker image mounts that come back empty, and containers that come back without their network — each a case where the command succeeds, the value reads back, and the next boot disagrees."
     buy_url: "https://buy.stripe.com/6oUcN41x2ep6fcvaKY5Vu04"
   - id: provisioning
     title: "Provisioning verification"
@@ -50,7 +50,7 @@ packs:
     title: "Local LLM artifacts"
     price: "$5"
     question: "Is the model, adapter, or build you just installed the thing it says it is?"
-    detail: "Nineteen checks. An Ollama quantisation that pulls and runs and returns no working code, a LoRA adapter accepted and applied to zero layers, a build that reports a commit hash from a repository it has never heard of, a response_format the server accepts and then ignores, a previous_response_id that is accepted and dropped, a tool parameter the gemma4 renderer never shows the model, an embedding batch whose positions the library reads past the end of, a prompt cache whose \"no limit\" setting keeps less than the default, and a decision model whose confidence is sharpened tenfold by a temperature its own library clamps at load time, a VRAM reservation Ollama prints in its log and never passes to the runner that places the layers, model sampling settings the OpenAI-compatible API quietly replaces with 1.0, an end-of-generation token chosen by its spelling that stops a model mid-sentence with a normal finish, a sleep mode that loses or crashes on a request arriving just before it sleeps, a JSON schema whose keys come back alphabetised so the model fills the wrong fields, a JSON schema a thinking model escapes whenever it answers without thinking, logprobs that speculative decoding fills with certainty, a Gemma 4 copy prompted with the small model's template because of its name, a prompt cache that answers a LoRA request from KV computed under another scale, and a LoRA adapter whose per-module scaling vLLM drops without a word."
+    detail: "Twenty-one checks. An Ollama quantisation that pulls and runs and returns no working code, a LoRA adapter accepted and applied to zero layers, a build that reports a commit hash from a repository it has never heard of, a response_format the server accepts and then ignores, a previous_response_id that is accepted and dropped, a tool parameter the gemma4 renderer never shows the model, an embedding batch whose positions the library reads past the end of, a prompt cache whose \"no limit\" setting keeps less than the default, and a decision model whose confidence is sharpened tenfold by a temperature its own library clamps at load time, a VRAM reservation Ollama prints in its log and never passes to the runner that places the layers, model sampling settings the OpenAI-compatible API quietly replaces with 1.0, an end-of-generation token chosen by its spelling that stops a model mid-sentence with a normal finish, a sleep mode that loses or crashes on a request arriving just before it sleeps, a JSON schema whose keys come back alphabetised so the model fills the wrong fields, a JSON schema a thinking model escapes whenever it answers without thinking, logprobs that speculative decoding fills with certainty, a Gemma 4 copy prompted with the small model's template because of its name, a prompt cache that answers a LoRA request from KV computed under another scale, a keep-alive connection left unread until another one closes, an Anthropic-compatible endpoint that ignores which tool you asked for and stops inside the reasoning, and a LoRA adapter whose per-module scaling vLLM drops without a word."
     buy_url: "https://buy.stripe.com/cNiaEWb7C0yge8rcT65Vu07"
 
 baseurl: ""

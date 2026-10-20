@@ -165,3 +165,5 @@ So the habit worth building is narrow and cheap: **test exposure from a differen
 And when you install something that manages its own firewall rules — Docker, Tailscale, libvirt, k3s — assume it did, and go look at the chain order once. The ordering is the entire behaviour, and it is visible in one command.
 
 Not every runtime behaves this way, and the common advice that it's a rootless-vs-rootful distinction is wrong: [Podman publishes the same port and your firewall still holds — even as root](https://homelabpostmortem.com/2026/08/25/podman-respects-your-firewall/).
+
+The opposite turned up on Docker 29.8 and later with Swarm: a container connecting to a port published on its own node now goes through the host's INPUT chain, and ufw drops it. [Swarm containers can't reach their own node's ports under ufw](https://homelabpostmortem.com/2026/10/18/swarm-containers-cannot-reach-their-own-node-under-ufw-since-docker-29-8/).

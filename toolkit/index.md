@@ -101,6 +101,14 @@ destructive, dry-run modes where it matters.
   with a LoRA loaded and reports whether a prompt restored from the RAM prompt
   cache is answered from KV computed under a different LoRA scale. From
   [llama-server's RAM prompt cache brings a prompt back with KV computed under a different LoRA scale]({{ '/2026/10/09/llama-server-prompt-cache-restores-kv-from-another-lora-scale/' | relative_url }}).
+- **`check-llama-http-stall.sh`** — on llama-server builds before b11737,
+  compares open client connections with base HTTP threads, and with `--watch` flags any
+  connection whose request sits unread in the socket for 5 seconds or more. From
+  [llama-server can leave a keep-alive connection unread until another one closes]({{ '/2026/10/18/llama-server-leaves-a-keep-alive-connection-unread-until-another-closes/' | relative_url }}).
+- **`check-llama-anthropic-controls.sh`** — sends four small requests to
+  llama-server's Anthropic-compatible `/v1/messages` and reports whether a forced
+  `tool_choice`, `tool_choice: none` and `stop_sequences` are honoured. From
+  [llama-server's Anthropic endpoint ignores which tool you ask for]({{ '/2026/10/18/llama-server-anthropic-endpoint-ignores-tool-choice-and-stops-inside-reasoning/' | relative_url }}).
 - **`check-lora-patterns.py`** — reads LoRA `adapter_config.json` files and
   lists the modules whose `rank_pattern` / `alpha_pattern` give them a scale
   vLLM won't apply, with the factor to fold into `lora_B`. From
@@ -139,6 +147,19 @@ destructive, dry-run modes where it matters.
   policy that are stopped when they should have been restarted, and running ones
   that will be (rootful, own ID mapping, AppArmor profile, AppArmor host). From
   [On an AppArmor host, rootful Podman restarts a --uidmap container once]({{ '/2026/10/11/rootful-podman-restarts-a-uidmap-container-once-on-an-apparmor-host/' | relative_url }}).
+- **`check-docker-image-mounts.sh`** — checks that every running container's
+  `type=image` mount still has the image's files in it; after a reboot (or, on
+  overlay2, a daemon restart) they come back running and empty. From
+  [A Docker type=image mount comes back empty after a reboot]({{ '/2026/10/18/docker-image-mount-comes-back-empty-after-a-reboot/' | relative_url }}).
+- **`check-docker-lost-network.sh`** — lists containers that were created on a
+  network and now have none, which on Docker 29 is what one start failing during
+  network setup leaves behind. From
+  [Since Docker 29, one failed start leaves a container with only a loopback interface]({{ '/2026/10/18/docker-29-container-loses-its-network-after-one-failed-start/' | relative_url }}).
+- **`check-rootless-build-limits.sh`** — says whether your Docker builds run
+  rootless, where `docker buildx build --resource` limits are dropped without a
+  warning, and with `--probe` measures it with a one-step build. Full toolkit
+  only. From
+  [Rootless Docker builds ignore --resource memory limits]({{ '/2026/10/18/rootless-docker-build-ignores-resource-memory-limits/' | relative_url }}).
 - **`check-podman-subpath-cp.sh`** — lists the Podman containers for which a
   `podman cp` while stopped will read and write the volume root instead of the
   `subpath=` they mount — a different file out, another container's file
@@ -169,6 +190,10 @@ destructive, dry-run modes where it matters.
   reachable from your network while your firewall reports them as denied.
   Docker's chains are evaluated before UFW's, so both are true at once. From
   [UFW says the port is closed]({{ '/2026/08/22/docker-publishes-past-ufw/' | relative_url }}).
+- **`check-swarm-ufw-ingress.sh`** — lists the ports a Swarm node publishes and
+  which ones containers on that same node can't reach because ufw drops them,
+  with the per-port rule for each. From
+  [Since Docker 29.8, a Swarm container can't reach a port published on its own node when ufw is on]({{ '/2026/10/18/swarm-containers-cannot-reach-their-own-node-under-ufw-since-docker-29-8/' | relative_url }}).
 - **`check-ir-tx.sh`** — lists IR transmitters and flags `pwm-ir-tx` on a
   6.18+ kernel, which sends every edge of a code within microseconds while
   `ir-ctl` reports success; `--probe` measures it from the kernel trace. From
