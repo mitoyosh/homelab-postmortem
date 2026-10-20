@@ -6,6 +6,8 @@ devto_title: "llama-server's logprobs are placeholders when speculative decoding
 devto_tags: llamacpp, llm, selfhosted, ai
 ---
 
+**Update 2026-10-20.** The `llama-speculative` part below is fixed. [ggml-org/llama.cpp#30095](https://github.com/ggml-org/llama.cpp/pull/30095) ("examples : fix draft sampling and rejection handling") was merged on 2026-10-12 and closed #29975; the first release containing it is b11617. Rebuilt from source at b11753 and run on the same fixture over the same 1000 seeds, the example now matches the target: `e` 0.328, `g` 0.470, `h` 0.202 against 0.345, 0.452 and 0.203, where b11430 gave `e` 1.000. The logprob placeholders this post is about are a separate problem in the server and are not affected by that change.
+
 **TL;DR**: When `llama-server` runs with speculative decoding (a draft model with `-md`, MTP, or one of the n-gram types), every token that comes out of the speculative loop is sent with `logprob: 0.0` and an empty `top_logprobs` list. The code sets the probability to 1.0 with the comment `// set later` and never sets it. With a draft model that is every token after the first. On b11430, the current release, the mean logprob of 64-token samples at temperature 1 was -0.48 without speculation and -0.0011 with it. The generated text looked normal, and nothing in the response or the log says the numbers are fill-ins. There is no per-request switch: the request fields that used to tune speculation are compiled out and ignored. Send logprob requests to an instance started without speculation. The tokens themselves are fine: on a small fixture, the server's speculative output had the same next-token distribution as plain sampling. The `llama-speculative` example program did not. The toolkit's `check-spec-logprobs.sh` checks a running server. Upstream: [ggml-org/llama.cpp#27972](https://github.com/ggml-org/llama.cpp/issues/27972) and [#29975](https://github.com/ggml-org/llama.cpp/issues/29975).
 
 ## The symptom
@@ -119,7 +121,7 @@ So:
 - **Send requests that need logprobs to a server started without `-md` / `--spec-type`.** The unspeculated runs above returned real values on every token. If you want speculation for everything else, that means a second instance.
 - **Check `/slots`, not `/props`, to see whether a server speculates.** `curl -s localhost:8080/slots | jq '.[].speculative'`.
 - **Treat an empty `top_logprobs` on a request that asked for alternatives as a missing value, not a certain one.** If you can't change the server, at least don't average over those tokens.
-- If you benchmark distributions, use `llama-server` rather than `llama-speculative` until #29975 is fixed.
+- If you benchmark distributions with `llama-speculative`, use b11617 or later; earlier builds always pick the draft's top token (#29975, fixed by #30095).
 
 ## The generalisable habit
 
