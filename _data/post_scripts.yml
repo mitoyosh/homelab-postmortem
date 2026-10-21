@@ -146,3 +146,11 @@
 "/2026/10/20/llama-server-responses-api-reports-a-cut-off-reply-as-completed/":
   - script: "check-llama-responses-status.sh"
     pack: "local-llm"
+"/2026/10/21/llama-cpp-splits-nemotron-3-hindi-differently-because-its-gguf-says-pixtral/":
+  - script: "check-gguf-pretokenizer.sh"
+    pack: "local-llm"
+"/2026/10/21/proxmox-disk-move-deletes-the-source-when-the-copy-is-missing/":
+  - script: "check-pve-move-delete.sh"
+    pack: "backup-restore"
+  - script: "pve-move-disk-verified.sh"
+    pack: "backup-restore"

@@ -114,6 +114,11 @@ destructive, dry-run modes where it matters.
   whether a reply cut off by the limit is marked `incomplete` or, wrongly,
   `completed`. From
   [llama-server's Responses API reports a cut-off reply as completed]({{ '/2026/10/20/llama-server-responses-api-reports-a-cut-off-reply-as-completed/' | relative_url }}).
+- **`check-gguf-pretokenizer.sh`** — reads a GGUF's header and flags a
+  pre-tokenizer that llama.cpp will apply wrongly (Nemotron 3 files tagged
+  `pixtral`); with `--server` it compares a running llama-server's tokenization
+  of multilingual samples with the model's Hugging Face tokenizer. From
+  [llama.cpp splits Hindi, Tamil and Thai differently from how Nemotron 3 was trained]({{ '/2026/10/21/llama-cpp-splits-nemotron-3-hindi-differently-because-its-gguf-says-pixtral/' | relative_url }}).
 - **`check-lora-patterns.py`** — reads LoRA `adapter_config.json` files and
   lists the modules whose `rank_pattern` / `alpha_pattern` give them a scale
   vLLM won't apply, with the factor to fold into `lora_B`. From
@@ -184,6 +189,14 @@ destructive, dry-run modes where it matters.
   `podman export` and `podman cp` archives carry every file owner shifted, and
   checks an export without writing it. From
   [Rootless podman export of a keep-id container shifts every file owner]({{ '/2026/09/30/podman-export-of-a-keep-id-container-shifts-every-owner/' | relative_url }}).
+- **`check-pve-move-delete.sh`** — on a Proxmox VE node, lists disk moves whose
+  target could not be found afterwards (LOST if "Delete source" then removed the
+  original) and VM disks whose volume no longer exists. From
+  [Proxmox's disk move with Delete source deletes the source even when the copy isn't there]({{ '/2026/10/21/proxmox-disk-move-deletes-the-source-when-the-copy-is-missing/' | relative_url }}).
+- **`pve-move-disk-verified.sh`** — moves a stopped VM's disk without "Delete
+  source", compares the copy with the original using `qemu-img compare`, and
+  removes the original only if they match. From
+  [Proxmox's disk move with Delete source deletes the source even when the copy isn't there]({{ '/2026/10/21/proxmox-disk-move-deletes-the-source-when-the-copy-is-missing/' | relative_url }}).
 - **`check-llama-response-format.sh`** — tells you which `response_format`
   forms a running `llama-server` actually enforces. The one its README shows
   is accepted and ignored. From
@@ -204,9 +217,9 @@ destructive, dry-run modes where it matters.
   reachable from your network while your firewall reports them as denied.
   Docker's chains are evaluated before UFW's, so both are true at once. From
   [UFW says the port is closed]({{ '/2026/08/22/docker-publishes-past-ufw/' | relative_url }}).
-- **`check-swarm-ufw-ingress.sh`** — lists the ports a Swarm node publishes and
-  which ones containers on that same node can't reach because ufw drops them,
-  with the per-port rule for each. From
+- **`check-swarm-ufw-ingress.sh`** — lists the ports this host publishes, through
+  Swarm ingress or ordinary bridge networks, that containers on the same host
+  can't reach because ufw drops them, with the per-port rule and bridge for each. From
   [Since Docker 29.8, a Swarm container can't reach a port published on its own node when ufw is on]({{ '/2026/10/18/swarm-containers-cannot-reach-their-own-node-under-ufw-since-docker-29-8/' | relative_url }}).
 - **`check-ir-tx.sh`** — lists IR transmitters and flags `pwm-ir-tx` on a
   6.18+ kernel, which sends every edge of a code within microseconds while
