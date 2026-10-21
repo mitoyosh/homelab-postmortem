@@ -111,3 +111,5 @@ To find affected models, `check-gemma4-renderer.sh` reads `/api/tags` and `/api/
 When a tool picks behaviour from a name, a copy is a different thing. `ollama cp` and `FROM` look like they produce the same model under another label, and for the weights and the config they do. But anything resolved from the label at request time is decided again for the copy, and the closer the model sits to a threshold, here 11.9B against 12B, the more likely that decision changes. The way to see it is to measure something the decision affects, here the prompt token count, on the original and the copy.
 
 The template also decides [what a Gemma 4 model does with your JSON schema when thinking is on](https://homelabpostmortem.com/2026/10/05/ollama-thinking-model-skips-your-json-schema-when-it-answers-directly/), which is the other side of the same `<|channel>` block.
+
+A single metadata string choosing the wrong behaviour turned up in llama.cpp too: [Nemotron 3 GGUFs say `pixtral`, and llama.cpp splits Hindi, Tamil and Thai with the wrong pre-tokenizer](https://homelabpostmortem.com/2026/10/21/llama-cpp-splits-nemotron-3-hindi-differently-because-its-gguf-says-pixtral/).
