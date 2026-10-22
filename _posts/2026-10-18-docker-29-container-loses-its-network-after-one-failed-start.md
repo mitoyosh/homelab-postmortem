@@ -6,6 +6,8 @@ devto_title: "Docker 29: one failed start leaves a container running with only l
 devto_tags: docker, networking, linux, selfhosted
 ---
 
+**Update 2026-10-22.** A Docker maintainer [pointed](https://github.com/moby/moby/issues/53928#issuecomment-6324188880) to an older pull request as the likely fix: [moby#52480](https://github.com/moby/moby/pull/52480), "daemon: connectToNetwork: keep Networks on failure", which changes the same function. It is open, not merged, and set for the 29.10.0 milestone, so 29.9.x behaves as described below; the reconnect-and-restart fix still applies.
+
 **TL;DR**: In Docker 29, when a container's start fails while its network is being set up, for example because a published port is bound to a host address that does not exist yet, Docker removes that network from the container's configuration. Every later start then succeeds with no network at all: exit 0, state `running`, only `lo` inside, no published ports, and nothing in the output says so. On Docker 29.9.1 this persisted across `systemctl restart docker`. Docker 28.5.2, same steps, kept the network and came up normally once the address existed. The change came with [moby#50945](https://github.com/moby/moby/pull/50945) ("Tidy up when endpoint join fails", in 29.0.0). `docker network connect <net> <container>` and a restart put it back. Upstream report: [moby/moby#53928](https://github.com/moby/moby/issues/53928).
 
 ## The symptom

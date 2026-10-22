@@ -98,3 +98,5 @@ So test reboots, not just restarts, and check the thing the service needs rather
 This is the second Docker 29.9.1 container this month that starts cleanly without something it was created with: [a container that failed one start lost its network](https://homelabpostmortem.com/2026/10/18/docker-29-container-loses-its-network-after-one-failed-start/) the same quiet way.
 
 The same gap between a success message and the data turned up on Proxmox: [a disk move with Delete source removed the original while the copy was missing, and the task ended TASK OK](https://homelabpostmortem.com/2026/10/21/proxmox-disk-move-deletes-the-source-when-the-copy-is-missing/).
+
+Which image store the daemon uses changes push results too: [the graphdriver store re-pushes zstd layers labelled gzip](https://homelabpostmortem.com/2026/10/22/docker-graphdriver-push-labels-zstd-layers-as-gzip/).

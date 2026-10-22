@@ -84,3 +84,5 @@ A status field is only useful if something can make it say no. When you rely on 
 And when an API is implemented by translating to another one, check that the translation carries the failure signals back, not just the content. Here the information existed one layer down, in the chat endpoint's `finish_reason`, and was dropped on the way out.
 
 This is the second place this month where llama-server's compatibility layers lose something on the way through: its Anthropic endpoint [ignores which tool you ask for and stops inside the model's reasoning](https://homelabpostmortem.com/2026/10/18/llama-server-anthropic-endpoint-ignores-tool-choice-and-stops-inside-reasoning/).
+
+Ollama loses tool calls in a different way: [a call to a tool name that isn't in `tools` is dropped](https://homelabpostmortem.com/2026/10/22/ollama-drops-a-tool-call-to-a-name-not-in-tools/), and the reply comes back empty.
