@@ -154,3 +154,12 @@
     pack: "backup-restore"
   - script: "pve-move-disk-verified.sh"
     pack: "backup-restore"
+"/2026/10/22/docker-graphdriver-push-labels-zstd-layers-as-gzip/":
+  - script: "check-image-layer-compression.sh"
+    pack: ""
+"/2026/10/22/ollama-drops-a-tool-call-to-a-name-not-in-tools/":
+  - script: "check-ollama-dropped-tool-calls.sh"
+    pack: "local-llm"
+"/2026/10/22/ollama-keep-alive-cancels-a-pending-model-swap/":
+  - script: "check-ollama-eviction-stall.sh"
+    pack: "local-llm"

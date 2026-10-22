@@ -119,6 +119,15 @@ destructive, dry-run modes where it matters.
   `pixtral`); with `--server` it compares a running llama-server's tokenization
   of multilingual samples with the model's Hugging Face tokenizer. From
   [llama.cpp splits Hindi, Tamil and Thai differently from how Nemotron 3 was trained]({{ '/2026/10/21/llama-cpp-splits-nemotron-3-hindi-differently-because-its-gguf-says-pixtral/' | relative_url }}).
+- **`check-ollama-eviction-stall.sh`** — on an Ollama server with one model
+  slot, says it's at risk of a request for another model waiting out a
+  keep_alive, finds such stalls in the debug log, and with `--release` unloads
+  the loaded model to free them. From
+  [With one model slot, a keep_alive on the loaded Ollama model cancels the swap]({{ '/2026/10/22/ollama-keep-alive-cancels-a-pending-model-swap/' | relative_url }}).
+- **`check-ollama-dropped-tool-calls.sh`** — probes a model on your Ollama
+  server for tool calls that are dropped because the name isn't in `tools`
+  (empty reply, `eval_count` above zero). From
+  [Ollama drops a tool call to a name that isn't in tools]({{ '/2026/10/22/ollama-drops-a-tool-call-to-a-name-not-in-tools/' | relative_url }}).
 - **`check-lora-patterns.py`** — reads LoRA `adapter_config.json` files and
   lists the modules whose `rank_pattern` / `alpha_pattern` give them a scale
   vLLM won't apply, with the factor to fold into `lora_B`. From
@@ -179,6 +188,10 @@ destructive, dry-run modes where it matters.
   Dockerfile against the stage's base image and flags the ones that will build
   fine and quietly leave the files owned by root. Full toolkit only. From
   [COPY --chown with a user that doesn't exist builds fine and gives the files to root]({{ '/2026/10/20/copy-chown-with-a-missing-user-builds-fine-and-leaves-root-ownership/' | relative_url }}).
+- **`check-image-layer-compression.sh`** — compares each layer's media type in a
+  registry manifest with the blob's actual compression, to catch zstd layers
+  that a graphdriver Docker re-pushed labelled gzip. Full toolkit only. From
+  [Docker's graphdriver store pushes pulled zstd layers labelled gzip]({{ '/2026/10/22/docker-graphdriver-push-labels-zstd-layers-as-gzip/' | relative_url }}).
 - **`check-podman-subpath-cp.sh`** — lists the Podman containers for which a
   `podman cp` while stopped will read and write the volume root instead of the
   `subpath=` they mount — a different file out, another container's file
